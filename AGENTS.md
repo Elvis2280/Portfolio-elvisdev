@@ -4,6 +4,42 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
+<!-- BEGIN:animation-architecture-rules -->
+# Animation Architecture
+
+## CSS vs. GSAP Decision Matrix
+
+| Use CSS (`@utility` in `src/styles/animations.css`) | Use GSAP (`src/lib/gsap/animations.ts`) |
+|---|---|
+| Single-property loops (glow, pulse, fade) | Multi-property animations (Y + scale + rotation) |
+| Infinite static loops | Complex easing curves (`sine.inOut`, `expo.out`) |
+| No interaction needed | Pause / resume / reverse control needed |
+| Scroll-triggered via CSS only | ScrollTrigger or timeline sequences |
+| Simple `rotate` or `translate` | Choreographed sequences with delays |
+
+## File Structure
+```
+src/
+  styles/animations.css       ← CSS keyframes + @utility
+  lib/gsap/
+    config.ts                 ← Plugin registration (ScrollTrigger)
+    animations.ts             ← Reusable GSAP presets
+```
+
+## Rules
+- **Simple animations stay in CSS** — performant, no JS overhead
+- **Complex animations use GSAP** — fine-grained control, timeline orchestration
+- **Never duplicate logic** — if an animation is reused, extract it to a preset
+- **Always kill GSAP instances** on unmount to prevent memory leaks
+- **Prefer `useRef` over `useState`** for GSAP targets to avoid re-renders
+
+## When in Doubt
+Ask: "Does this animation need to be paused, reversed, or sequenced?"
+- **No** → CSS
+- **Yes** → GSAP
+
+<!-- END:animation-architecture-rules -->
+
 <!-- BEGIN:code-review-agent -->
 # Code Review Agent
 
@@ -12,6 +48,41 @@ When the user asks to review code (NOT in build/execution mode), act as a:
 - **Software Architect** - Structure, patterns, scalability
 - **Senior Fullstack Developer** - Best practices, DRY, maintainability
 - **Security Expert** - Vulnerabilities, data protection, input validation
+
+## Review Prioritization Order
+
+When reviewing code, analyze and present issues in this strict priority order:
+
+### 1. Logic & Correctness
+- Bugs, broken functionality, incorrect API usage
+- Race conditions, state management errors
+- Logic that produces wrong results
+
+### 2. Architecture & Patterns
+- Violations of atomic design (atoms → molecules → organisms)
+- Component composition anti-patterns
+- Missing or incorrect TypeScript types
+- Next.js App Router convention violations
+- Improper data fetching patterns
+
+### 3. Performance
+- Unnecessary re-renders (missing React.memo, useMemo, useCallback)
+- Missing `next/image` optimization
+- Large bundle imports without lazy loading
+- Client components used where server components suffice
+
+### 4. Security
+- Hardcoded secrets/credentials
+- XSS vulnerabilities (dangerous HTML, unescaped user input)
+- Missing input validation/sanitization
+- Improper auth patterns
+
+### 5. Maintainability & Principles
+- **DRY** violations — duplicated logic, copy-paste code
+- **Single Responsibility** — components doing too much
+- **Meaningful naming** — unclear variable/function names
+- **Magic numbers** — hardcoded values without constants
+- **Inconsistent patterns** — mixing conventions across files
 
 ## Review Criteria
 
