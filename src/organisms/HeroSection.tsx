@@ -36,21 +36,21 @@ export default function HeroSection() {
         />
       </div>
 
-      <div className="relative z-10 pt-32 max-w-4xl">
-        <p className="font-mono text-base text-muted-foreground/70">
+      <div className="relative z-10 pt-12 max-w-4xl">
+        <p className="text-caption text-muted-foreground/70">
           ~/Portfolio/Main
         </p>
 
         <h1 className="mt-6">
-          <span className="block text-7xl font-bold text-white">Fullstack</span>
+          <span className="block text-hero text-white">Fullstack</span>
           <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
-            <span className="text-7xl font-bold bg-gradient-to-br from-neon via-neon-300 to-purple bg-clip-text text-transparent">
+            <span className="text-hero bg-gradient-to-br from-neon via-neon-300 to-purple bg-clip-text text-transparent">
               Developer
             </span>
           </span>
         </h1>
 
-        <p className="mt-8 text-lg text-muted-foreground/80 leading-relaxed max-w-2xl">
+        <p className="mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-2xl">
           Building robust digital solutions from concept to production. Five
           years of experience across{' '}
           <span className="text-neon [text-shadow:_0_0_8px_rgba(34,211,238,0.5)]">

@@ -1,0 +1,23 @@
+@utility text-hero {
+  @apply text-7xl font-bold;
+}
+
+@utility text-section {
+  @apply text-5xl font-bold;
+}
+
+@utility text-subtitle {
+  @apply text-2xl font-semibold;
+}
+
+@utility text-body {
+  @apply text-lg;
+}
+
+@utility text-step-title {
+  @apply text-xl font-semibold text-foreground;
+}
+
+@utility text-caption {
+  @apply text-base font-mono;
+}
