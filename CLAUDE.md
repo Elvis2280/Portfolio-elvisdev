@@ -5,11 +5,13 @@
 The system operates in two modes:
 
 ### Build Mode
+
 - Tasks requiring code execution (writing, editing, testing)
 - Implementing features, fixing bugs, refactoring
 - Any task that modifies or creates code files
 
 ### Review Mode
+
 - User asks to analyze/audit/review existing code
 - Triggered by phrases like:
   - "review my code"
@@ -22,6 +24,7 @@ The system operates in two modes:
   - Any variation of the above
 
 When in Review Mode, activate the Code Review Agent to provide:
+
 - Software architecture feedback
 - Best practices assessment
 - Clean code evaluation

@@ -1,4 +1,4 @@
-import { gsap, ScrollTrigger } from './config';
+import { gsap } from './config';
 
 export function createAstronautAnimation(element: HTMLElement | null) {
   if (!element) return null;

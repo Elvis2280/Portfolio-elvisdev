@@ -4,19 +4,19 @@ A personal portfolio built with Next.js, Tailwind CSS, and designed with atomic 
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|-------------|
-| **Framework** | Next.js 16.2.4 (App Router) |
-| **Language** | TypeScript |
-| **UI Library** | React 19.2.4 |
-| **Styling** | Tailwind CSS 4 |
-| **UI Components** | shadcn 4.3.0, Radix UI 1.4.3 |
-| **Icons** | lucide-react |
-| **Animations** | tw-animate-css |
-| **CSS Utilities** | clsx, tailwind-merge, class-variance-authority |
-| **Linting** | ESLint 9 |
-| **Package Manager** | pnpm |
-| **CMS** | (To be decided) |
+| Category            | Technology                                     |
+| ------------------- | ---------------------------------------------- |
+| **Framework**       | Next.js 16.2.4 (App Router)                    |
+| **Language**        | TypeScript                                     |
+| **UI Library**      | React 19.2.4                                   |
+| **Styling**         | Tailwind CSS 4                                 |
+| **UI Components**   | shadcn 4.3.0, Radix UI 1.4.3                   |
+| **Icons**           | lucide-react                                   |
+| **Animations**      | tw-animate-css                                 |
+| **CSS Utilities**   | clsx, tailwind-merge, class-variance-authority |
+| **Linting**         | ESLint 9                                       |
+| **Package Manager** | pnpm                                           |
+| **CMS**             | (To be decided)                                |
 
 ---
 
@@ -28,31 +28,31 @@ The theme is a **dark-only** palette defined with CSS custom properties in `app/
 
 These map to Tailwind's `bg-*`, `text-*`, `border-*`, `ring-*` utilities directly:
 
-| Token | Hex | Tailwind Utility | Purpose |
-|-------|-----|------------------|---------|
-| `--background` | `#09090B` | `bg-background` | Page background |
-| `--foreground` | `#FAFAFA` | `text-foreground` | Primary text |
-| `--card` | `#18181B` | `bg-card` | Card / popover surfaces |
-| `--card-foreground` | `#FAFAFA` | `text-card-foreground` | Text on cards |
-| `--border` | `#27272A` | `border-border` | Borders, dividers |
-| `--input` | `#27272A` | `border-input` | Input fields |
-| `--muted` | `#18181B` | `bg-muted` | Subtle backgrounds |
-| `--muted-foreground` | `#A1A1AA` | `text-muted-foreground` | Secondary text |
-| `--primary` | `#22D3EE` | `bg-primary` | Accent / CTA buttons |
-| `--primary-foreground` | `#09090B` | `text-primary-foreground` | Text on neon surfaces |
-| `--secondary` | `#27272A` | `bg-secondary` | Secondary buttons |
-| `--secondary-foreground` | `#FAFAFA` | `text-secondary-foreground` | Text on secondary |
-| `--accent` | `#22D3EE` | `bg-accent` | Highlights |
-| `--ring` | `#22D3EE` | `ring-ring` | Focus rings |
-| `--destructive` | `#EF4444` | `bg-destructive` | Errors / danger |
+| Token                    | Hex       | Tailwind Utility            | Purpose                 |
+| ------------------------ | --------- | --------------------------- | ----------------------- |
+| `--background`           | `#09090B` | `bg-background`             | Page background         |
+| `--foreground`           | `#FAFAFA` | `text-foreground`           | Primary text            |
+| `--card`                 | `#18181B` | `bg-card`                   | Card / popover surfaces |
+| `--card-foreground`      | `#FAFAFA` | `text-card-foreground`      | Text on cards           |
+| `--border`               | `#27272A` | `border-border`             | Borders, dividers       |
+| `--input`                | `#27272A` | `border-input`              | Input fields            |
+| `--muted`                | `#18181B` | `bg-muted`                  | Subtle backgrounds      |
+| `--muted-foreground`     | `#A1A1AA` | `text-muted-foreground`     | Secondary text          |
+| `--primary`              | `#22D3EE` | `bg-primary`                | Accent / CTA buttons    |
+| `--primary-foreground`   | `#09090B` | `text-primary-foreground`   | Text on neon surfaces   |
+| `--secondary`            | `#27272A` | `bg-secondary`              | Secondary buttons       |
+| `--secondary-foreground` | `#FAFAFA` | `text-secondary-foreground` | Text on secondary       |
+| `--accent`               | `#22D3EE` | `bg-accent`                 | Highlights              |
+| `--ring`                 | `#22D3EE` | `ring-ring`                 | Focus rings             |
+| `--destructive`          | `#EF4444` | `bg-destructive`            | Errors / danger         |
 
 ### Neon Scale (`--color-neon-*`)
 
 A custom neon/cyan color scale for gradients, opacity overlays, and decorative use:
 
-| Shade | Hex |
-|-------|-----|
-| `neon-50` | `#ECFEFF` |
+| Shade      | Hex       |
+| ---------- | --------- |
+| `neon-50`  | `#ECFEFF` |
 | `neon-100` | `#CFFAFE` |
 | `neon-200` | `#A5F3FC` |
 | `neon-300` | `#67E8F9` |
@@ -74,7 +74,9 @@ A custom neon/cyan color scale for gradients, opacity overlays, and decorative u
 </div>
 
 <!-- Primary neon CTA button -->
-<button class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2">
+<button
+  class="bg-primary text-primary-foreground hover:bg-primary/90 rounded-md px-4 py-2"
+>
   Get Started
 </button>
 
@@ -144,13 +146,13 @@ portfolio/
 
 ### Atomic Design Levels
 
-| Level | Description | Examples |
-|-------|-------------|----------|
-| **Atoms** | Basic building blocks with no dependencies | Button, Input, Badge, Typography |
-| **Molecules** | Simple group of atoms working together | SearchBar, Card, FormField, SocialLink |
-| **Organisms** | Complex UI sections composed of molecules | Header, Footer, ProjectCard, HeroSection |
-| **Templates** | Page layouts defining structure | BaseLayout, BlogLayout |
-| **Pages** | Next.js App Router pages | HomePage, AboutPage |
+| Level         | Description                                | Examples                                 |
+| ------------- | ------------------------------------------ | ---------------------------------------- |
+| **Atoms**     | Basic building blocks with no dependencies | Button, Input, Badge, Typography         |
+| **Molecules** | Simple group of atoms working together     | SearchBar, Card, FormField, SocialLink   |
+| **Organisms** | Complex UI sections composed of molecules  | Header, Footer, ProjectCard, HeroSection |
+| **Templates** | Page layouts defining structure            | BaseLayout, BlogLayout                   |
+| **Pages**     | Next.js App Router pages                   | HomePage, AboutPage                      |
 
 ---
 
@@ -215,25 +217,25 @@ The CMS integration is planned but not yet implemented. The `lib/cms/` folder co
 
 ```typescript
 // shadcn/ui components (atoms level)
-import { Button } from "@/atoms/ui/button";
-import { Input } from "@/atoms/ui/input";
+import { Button } from '@/atoms/ui/button';
+import { Input } from '@/atoms/ui/input';
 
 // Custom atoms
-import Icon from "@/atoms/Icon";
+import Icon from '@/atoms/Icon';
 
 // Molecules
-import Card from "@/molecules/Card";
-import SearchBar from "@/molecules/SearchBar";
+import Card from '@/molecules/Card';
+import SearchBar from '@/molecules/SearchBar';
 
 // Organisms
-import Header from "@/organisms/Header";
-import Footer from "@/organisms/Footer";
+import Header from '@/organisms/Header';
+import Footer from '@/organisms/Footer';
 
 // Templates
-import BaseLayout from "@/templates/BaseLayout";
+import BaseLayout from '@/templates/BaseLayout';
 
 // Pages
-import HomePage from "@/pages/HomePage";
+import HomePage from '@/pages/HomePage';
 ```
 
 ### CSS Classes
@@ -251,7 +253,7 @@ import HomePage from "@/pages/HomePage";
 Tailwind v4 configures themes in CSS, not JavaScript. There is **no `tailwind.config.ts`**. The theme lives in `app/globals.css` via `@theme inline`:
 
 ```css
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme inline {
   --color-background: var(--background);
@@ -277,9 +279,9 @@ Geist Sans and Geist Mono are self-hosted via `next/font/google` in `app/layout.
 Configured in `tsconfig.json`:
 
 ```typescript
-import { Button } from "@/atoms/ui/button";   // shadcn components
-import Header from "@/organisms/Header";        // organisms
-import { cn } from "@/lib/utils";               // utilities
+import { Button } from '@/atoms/ui/button'; // shadcn components
+import Header from '@/organisms/Header'; // organisms
+import { cn } from '@/lib/utils'; // utilities
 ```
 
 ### Agent Rules

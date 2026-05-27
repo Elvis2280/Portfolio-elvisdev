@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import NavLink from '@/atoms/NavLink';
 
 const Header = () => {
