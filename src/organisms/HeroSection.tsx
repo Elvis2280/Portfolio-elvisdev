@@ -8,6 +8,7 @@ import { RiNextjsFill } from 'react-icons/ri';
 import MoonRing from '@/molecules/MoonRing';
 import SpeechBubble from '@/molecules/SpeechBubble';
 import { createAstronautAnimation } from '@/lib/gsap/animations';
+import { speechData } from '@/data/speech';
 
 export default function HeroSection() {
   const astronautRef = useRef<HTMLDivElement>(null);
@@ -73,7 +74,7 @@ export default function HeroSection() {
       </div>
 
       {/* Moon + Rings wrapper */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[72vw] max-w-[900px] aspect-square pointer-events-none z-[5]">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[55vw] lg:w-[57.6vw] min-[1440px]:w-[65vw] min-[1920px]:w-[72vw] max-w-[500px] lg:max-w-[720px] min-[1440px]:max-w-[800px] min-[1920px]:max-w-[900px] aspect-square pointer-events-none z-[5]">
         {/* Ring 1: Inner, Clockwise */}
 
         <MoonRing direction="clockwise" duration={20} scale={1.5}>
@@ -125,6 +126,7 @@ export default function HeroSection() {
             alt="Moon decoration"
             fill
             className="object-contain animate-moon-glow"
+            loading="eager"
           />
         </div>
       </div>
@@ -132,19 +134,10 @@ export default function HeroSection() {
       {/* Astronaut floating above the moon */}
       <div
         ref={astronautRef}
-        className="absolute bottom-[400px] left-1/2 -translate-x-1/2 w-[350px] h-[350px] pointer-events-none z-[7]"
+        className="absolute bottom-[200px] lg:bottom-[250px] min-[1440px]:bottom-[325px] min-[1920px]:bottom-[400px] left-1/2 -translate-x-1/2 w-[250px] h-[250px] lg:w-[300px] lg:h-[300px] min-[1440px]:w-[325px] min-[1440px]:h-[325px] min-[1920px]:w-[350px] min-[1920px]:h-[350px] pointer-events-none z-[7]"
       >
         <SpeechBubble
-          messages={[
-            `Holaa, I’m Concho 👋
-Elvis is such a huge fan of Bad Bunny that I somehow became part of his daily life too 😎
-Yep… you can spot me in the DTMF music album. Since then, I’ve been hanging around while he builds cool things on the internet`,
-            `Outside of coding, me and Elvis are usually vibing to music 🎵, playing games 🎮, traveling ✈️, cooking something good 🍳, or dancing like nobody’s watching 💃
-That Latino energy? It’s always part of the process`,
-            `Sooo… if you need a developer with creativity, good vibes, and Latino sazón 🌴🔥
-you’re definitely in the right place.
-Hope we can connect and build something amazing together!`,
-          ]}
+          messages={speechData.intro}
           delay={5}
           arrowPosition="center"
           typingSpeed={100}
