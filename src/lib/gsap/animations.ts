@@ -42,6 +42,7 @@ export function createEstrellaAnimation(containerRef: HTMLElement | null) {
     gsap.to('#cuerpo', {
       x: -100,
       y: 50,
+      scale: 1.05,
       duration: 3,
       ease: 'power2.out',
       repeat: -1,
@@ -105,7 +106,7 @@ export function createBlinkAnimation(parpadosElement: SVGGElement | null) {
     scaleY: 0,
     opacity: 0,
     duration: 0.1,
-    ease: 'power1.in',
+    ease: 'power1.inOut',
   });
 
   return tl;
@@ -119,4 +120,222 @@ export function createCinturonGlowAnimation() {
     repeat: -1,
     ease: 'sine.inOut',
   });
+}
+
+function createAntennaSway(antenaEl: SVGGElement | null) {
+  if (!antenaEl) return null;
+
+  gsap.set(antenaEl, { transformOrigin: '50% 100%' });
+
+  return gsap.fromTo(
+    antenaEl,
+    { rotation: -8 },
+    {
+      rotation: 8,
+      duration: 1.5,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut',
+    },
+  );
+}
+
+export function createMiraAnimation(miraRef: SVGGElement | null) {
+  if (!miraRef) return null;
+
+  gsap.set(miraRef, { transformOrigin: '50% 100%' });
+
+  const tl = gsap.timeline({ repeat: -1 });
+
+  tl.to(miraRef, {
+    y: -40,
+    rotation: -12,
+    duration: 2.5,
+    ease: 'power2.inOut',
+  });
+
+  tl.to({}, { duration: 0.8 });
+
+  tl.to(miraRef, {
+    y: 40,
+    rotation: 12,
+    duration: 3,
+    ease: 'power2.inOut',
+  });
+
+  tl.to({}, { duration: 0.8 });
+
+  tl.to(miraRef, {
+    y: 0,
+    rotation: 0,
+    duration: 2,
+    ease: 'power2.inOut',
+  });
+
+  return tl;
+}
+
+export function createExperienceScrollAnimation(
+  containerRef: HTMLDivElement | null,
+  helmetRef: HTMLDivElement | null,
+  antenaRef: SVGGElement | null,
+  stepNodes: (HTMLDivElement | null)[],
+  dotFills: (HTMLDivElement | null)[],
+  connFills: (HTMLDivElement | null)[],
+  textEls: (HTMLDivElement | null)[],
+) {
+  if (!containerRef || !helmetRef || !antenaRef) return null;
+
+  let wheelHandler: ((e: WheelEvent) => void) | null = null;
+  let touchStartHandler: ((e: TouchEvent) => void) | null = null;
+  let touchMoveHandler: ((e: TouchEvent) => void) | null = null;
+  let isTrapped = false;
+  let progress = 0;
+  let isLoaded = false;
+  let touchStartY = 0;
+  let tl: ReturnType<typeof gsap.timeline>;
+
+  const SENSITIVITY = 0.0003;
+
+  function releaseTrap() {
+    isTrapped = false;
+    document.body.style.overflow = '';
+    if (wheelHandler) window.removeEventListener('wheel', wheelHandler);
+    if (touchStartHandler)
+      window.removeEventListener('touchstart', touchStartHandler);
+    if (touchMoveHandler)
+      window.removeEventListener('touchmove', touchMoveHandler);
+  }
+
+  function updateProgress(p: number) {
+    if (isNaN(p)) return;
+    const clamped = Math.max(0, Math.min(1, p));
+
+    progress = clamped;
+
+    tl.progress(progress);
+
+    if (progress >= 1) isLoaded = true;
+
+    if (progress >= 1 || progress <= 0) {
+      releaseTrap();
+    }
+  }
+
+  function onWheel(e: WheelEvent) {
+    if (!isTrapped) return;
+    e.preventDefault();
+    updateProgress(progress + e.deltaY * SENSITIVITY);
+  }
+
+  function onTouchStart(e: TouchEvent) {
+    if (!isTrapped) return;
+    touchStartY = e.touches[0].clientY;
+  }
+
+  function onTouchMove(e: TouchEvent) {
+    if (!isTrapped) return;
+    e.preventDefault();
+    const deltaY = touchStartY - e.touches[0].clientY;
+    touchStartY = e.touches[0].clientY;
+    updateProgress(progress + deltaY * SENSITIVITY);
+  }
+
+  function activateTrap() {
+    if (isTrapped || progress >= 1 || isLoaded) return;
+    containerRef!.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    isTrapped = true;
+    document.body.style.overflow = 'hidden';
+    wheelHandler = onWheel;
+    touchStartHandler = onTouchStart;
+    touchMoveHandler = onTouchMove;
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('touchstart', onTouchStart);
+    window.addEventListener('touchmove', onTouchMove, { passive: false });
+  }
+
+  const ctx = gsap.context(() => {
+    const containerRect = containerRef.getBoundingClientRect();
+    const helmetRect = helmetRef.getBoundingClientRect();
+    const helmetHalfW = helmetRect.width / 2;
+    const helmetHalfH = helmetRect.height / 2;
+
+    const dotPositions = stepNodes.map((dot) => {
+      if (!dot) return { x: 0, y: 0 };
+      const rect = dot.getBoundingClientRect();
+      return {
+        x: rect.left + rect.width / 2 - containerRect.left - helmetHalfW,
+        y: rect.top + rect.height / 2 - containerRect.top - helmetHalfH,
+      };
+    });
+
+    gsap.set(helmetRef, {
+      x: dotPositions[0].x,
+      y: dotPositions[0].y,
+    });
+
+    if (dotFills[0]) gsap.set(dotFills[0], { height: '100%' });
+    for (let i = 1; i < dotFills.length; i++) {
+      if (dotFills[i]) gsap.set(dotFills[i], { height: '0%' });
+    }
+    connFills.forEach((fill) => gsap.set(fill, { height: '0%' }));
+    textEls.forEach((el, i) => {
+      if (!el) return;
+      gsap.set(el, {
+        opacity: i === 0 ? 1 : 0,
+        x: i === 0 ? 0 : -50,
+        duration: 1.5,
+        ease: 'power2.in',
+      });
+    });
+
+    const numSteps = dotFills.length;
+
+    tl = gsap.timeline({ paused: true });
+
+    for (let i = 1; i < numSteps; i++) {
+      const t = i;
+
+      if (dotFills[i]) {
+        tl.to(
+          dotFills[i],
+          { height: '100%', duration: 1, ease: 'none' },
+          t - 1,
+        );
+      }
+
+      if (i > 0 && connFills[i - 1]) {
+        tl.to(
+          connFills[i - 1],
+          { height: '100%', duration: 1, ease: 'none' },
+          t - 1,
+        );
+      }
+
+      tl.to(
+        helmetRef,
+        {
+          x: dotPositions[i].x,
+          y: dotPositions[i].y,
+          duration: 1,
+          ease: 'none',
+        },
+        t - 1,
+      );
+
+      if (textEls[i]) {
+        tl.to(textEls[i], { opacity: 1, x: 0, duration: 0.2 }, t);
+      }
+    }
+
+    tl.to({}, { duration: 1 }, numSteps - 1);
+
+    createAntennaSway(antenaRef);
+  }, containerRef);
+
+  ctx.add(() => {
+    releaseTrap();
+  });
+
+  return { ctx, activateTrap, releaseTrap };
 }

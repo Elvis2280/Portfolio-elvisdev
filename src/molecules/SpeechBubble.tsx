@@ -96,21 +96,20 @@ export default function SpeechBubble({
       <div
         ref={containerRef}
         className={cn(
-          'relative flex-1 bg-secondary border border-border rounded-lg px-4 py-3 text-foreground text-sm font-mono animate-speech-entrance min-w-80 max-h-20 overflow-y-scroll scrollbar-none',
+          'relative flex-1 bg-secondary border border-border rounded-lg px-4 py-3 text-foreground text-sm font-mono animate-speech-entrance min-w-80 h-20 overflow-y-scroll scrollbar-none',
           className,
         )}
       >
         <span>{displayText}</span>
         <span className="animate-pulse">|</span>
 
-        {/* Triangle pointer */}
+        <div
+          className={cn(
+            'absolute bottom-0 translate-y-1/2 w-4 h-4 bg-secondary rotate-45 border-b border-r border-border',
+            pointerClasses[arrowPosition],
+          )}
+        />
       </div>
-      <div
-        className={cn(
-          'bottom-1.5 w-4 h-4 bg-white rotate-45 border-b border-r border-border',
-          pointerClasses[arrowPosition],
-        )}
-      />
     </div>
   );
 }

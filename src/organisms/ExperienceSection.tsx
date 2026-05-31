@@ -2,12 +2,17 @@
 
 import { useEffect, useRef } from 'react';
 import Estrella from '@/atoms/Estrella';
-import { createEstrellaAnimation } from '@/lib/gsap/animations';
+import Observatorio from '@/atoms/Observatorio';
+import {
+  createEstrellaAnimation,
+  createMiraAnimation,
+} from '@/lib/gsap/animations';
 import ExperienceStepper from '@/molecules/ExperienceStepper';
 import { experiences } from '@/data/experience';
 
 export default function ExperienceSection() {
   const estrellaRef = useRef<HTMLDivElement>(null);
+  const miraRef = useRef<SVGGElement>(null);
 
   useEffect(() => {
     const ctx = createEstrellaAnimation(estrellaRef.current);
@@ -16,12 +21,19 @@ export default function ExperienceSection() {
     };
   }, []);
 
+  useEffect(() => {
+    const tl = createMiraAnimation(miraRef.current);
+    return () => {
+      tl?.kill();
+    };
+  }, []);
+
   return (
-    <section className="min-h-[100vh] relative overflow-hidden bg-background">
+    <section className="relative overflow-hidden bg-background pb-8">
       {/* Estrella at top right */}
       <div
         ref={estrellaRef}
-        className="absolute top-8 right-20 w-[300px] h-[300px] pointer-events-none z-[5] overflow-visible"
+        className="absolute top-1/5 right-4 w-[300px] h-[300px] pointer-events-none z-[5] overflow-visible"
       >
         <Estrella className="w-full h-full overflow-visible" />
       </div>
@@ -35,7 +47,7 @@ export default function ExperienceSection() {
         <h2 className="mt-6">
           <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
             <span className="text-section bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
-              Working experience
+              Working Experience
             </span>
           </span>
         </h2>
@@ -52,12 +64,19 @@ export default function ExperienceSection() {
           </span>
           .
         </p>
+      </div>
 
+      <div className=" pl-4">
         <ExperienceStepper experiences={experiences} />
       </div>
 
-      {/* Smooth fade at section bottom */}
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/50 to-transparent z-[6] pointer-events-none" />
+      {/* Observatorio absolute at bottom right */}
+      <div className="absolute bottom-[15%] right-[33%] z-[5] pointer-events-none w-[250px] h-[250px] overflow-visible">
+        <Observatorio
+          className="w-full h-full overflow-visible"
+          miraRef={miraRef}
+        />
+      </div>
     </section>
   );
 }

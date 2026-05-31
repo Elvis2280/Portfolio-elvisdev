@@ -14,9 +14,12 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Elvisdev - Personal Portfolio',
+  title: 'Elvis Miranda - Personal Portfolio',
   description:
-    'A personal portfolio showcasing the projects and skills of Elvisdev, a passionate developer.',
+    'A personal portfolio showcasing the projects and skills of Elvis Miranda, a Latin American developer building software for the world.',
+  icons: {
+    icon: '/favicon.webp',
+  },
 };
 
 export default function RootLayout({
