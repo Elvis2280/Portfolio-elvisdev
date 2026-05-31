@@ -21,7 +21,7 @@ export default function ExperienceSection() {
       {/* Estrella at top right */}
       <div
         ref={estrellaRef}
-        className="absolute top-0 right-20 w-[300px] h-[300px] pointer-events-none z-[5] overflow-visible"
+        className="absolute top-8 right-20 w-[300px] h-[300px] pointer-events-none z-[5] overflow-visible"
       >
         <Estrella className="w-full h-full overflow-visible" />
       </div>

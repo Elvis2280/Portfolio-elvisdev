@@ -7,16 +7,26 @@ import { FaGolang } from 'react-icons/fa6';
 import { RiNextjsFill } from 'react-icons/ri';
 import MoonRing from '@/molecules/MoonRing';
 import SpeechBubble from '@/molecules/SpeechBubble';
-import { createAstronautAnimation } from '@/lib/gsap/animations';
+import ConchoAstronaut from '@/atoms/ConchoAstronaut';
+import {
+  createAstronautAnimation,
+  createBlinkAnimation,
+  createCinturonGlowAnimation,
+} from '@/lib/gsap/animations';
 import { speechData } from '@/data/speech';
 
 export default function HeroSection() {
   const astronautRef = useRef<HTMLDivElement>(null);
+  const parpadosRef = useRef<SVGGElement>(null);
 
   useEffect(() => {
-    const anim = createAstronautAnimation(astronautRef.current);
+    const floatAnim = createAstronautAnimation(astronautRef.current);
+    const blinkAnim = createBlinkAnimation(parpadosRef.current);
+    const cinturonAnim = createCinturonGlowAnimation();
     return () => {
-      anim?.kill();
+      floatAnim?.kill();
+      blinkAnim?.kill();
+      cinturonAnim?.kill();
     };
   }, []);
 
@@ -42,7 +52,7 @@ export default function HeroSection() {
           ~/Portfolio/Main
         </p>
 
-        <h1 className="mt-6">
+        <h1 className="mt-2">
           <span className="block text-hero text-white">Fullstack</span>
           <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
             <span className="text-hero bg-gradient-to-br from-neon via-neon-300 to-purple bg-clip-text text-transparent">
@@ -51,7 +61,7 @@ export default function HeroSection() {
           </span>
         </h1>
 
-        <p className="mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-2xl">
+        <p className="mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-xl">
           Building robust digital solutions from concept to production. Five
           years of experience across{' '}
           <span className="text-neon [text-shadow:_0_0_8px_rgba(34,211,238,0.5)]">
@@ -143,12 +153,7 @@ export default function HeroSection() {
           typingSpeed={100}
           className="absolute -top-16 left-4 w-24"
         />
-        <Image
-          src="/images/decorations/objects/concho-astronaut.webp"
-          alt="Astronaut"
-          fill
-          className="object-contain"
-        />
+        <ConchoAstronaut className="w-full h-full" parpadosRef={parpadosRef} />
       </div>
 
       {/* Smooth fade at section bottom — gradual transition over 192px */}

@@ -34,6 +34,10 @@
   animation: ring-pulse 3s ease-in-out infinite 1.5s;
 }
 
+@utility animate-header-blink {
+  animation: header-blink 7s ease-in-out infinite;
+}
+
 @keyframes moon-glow {
   0%,
   100% {
@@ -114,6 +118,23 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes header-blink {
+  0%,
+  100% {
+    text-shadow:
+      0 0 20px rgba(255, 255, 255, 0.2),
+      0 0 40px rgba(34, 211, 238, 0.1),
+      0 1px 2px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    text-shadow:
+      0 0 30px rgba(255, 255, 255, 0.5),
+      0 0 60px rgba(255, 255, 255, 0.2),
+      0 0 80px rgba(34, 211, 238, 0.15),
+      0 1px 2px rgba(0, 0, 0, 0.4);
   }
 }
 
