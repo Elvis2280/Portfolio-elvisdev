@@ -7,7 +7,7 @@ export default function ProjectsSection() {
           ~/Portfolio/Projects
         </p>
 
-        <h2 className="mt-6">
+        <h2 id="project-section" className="mt-6">
           <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
             <span className="text-section bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
               Featured Projects

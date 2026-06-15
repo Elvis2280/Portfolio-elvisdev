@@ -1,6 +1,12 @@
+'use client';
 import NavLink from '@/atoms/NavLink';
 
+const projectId = 'project-section';
 const Header = () => {
+  const handleScrollToProjects = () => {
+    document.getElementById(projectId)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <header className="relative h-[72px] p-4 bg-background/80 backdrop-blur-md border-b border-border/50 shadow-[0_4px_32px_rgba(34,211,238,0.18)]">
       {/* Neon cyan glow line at bottom edge */}
@@ -13,7 +19,9 @@ const Header = () => {
         </div>
         <div className="flex gap-12">
           <NavLink href="/">Home</NavLink>
-          <NavLink href="/">Projects</NavLink>
+          <NavLink href="/" onClick={handleScrollToProjects}>
+            Projects
+          </NavLink>
           <NavLink href="/">Contact</NavLink>
         </div>
         <div></div>

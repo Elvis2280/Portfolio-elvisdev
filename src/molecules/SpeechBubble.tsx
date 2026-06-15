@@ -96,7 +96,7 @@ export default function SpeechBubble({
       <div
         ref={containerRef}
         className={cn(
-          'relative flex-1 bg-secondary border border-border rounded-lg px-4 py-3 text-foreground text-sm font-mono animate-speech-entrance min-w-80 h-20 overflow-y-scroll scrollbar-none',
+          'relative flex-1 bg-secondary border border-border rounded-lg px-4 py-4 text-foreground text-sm font-mono animate-speech-entrance min-w-80 h-20 overflow-y-scroll scrollbar-none',
           className,
         )}
       >

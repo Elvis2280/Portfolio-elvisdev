@@ -8,20 +8,20 @@ export interface Experience {
 export const experiences: Experience[] = [
   {
     id: '1',
-    title: 'Senior Frontend Developer',
-    subtitle: 'TechCorp · 2023 - Present',
-    text: 'Led the migration of a legacy dashboard to Next.js 14 with Server Components, reducing page load time by 40%. Architected a shared component library used across 4 teams and mentored 3 junior developers.',
+    title: 'Software Engineer',
+    subtitle: 'Enon · 2024 - Present',
+    text: 'Architected AI Agent skills using OpenClaw and Ollama, leading an event-driven RAG backend that orchestrated file conversion, OCR, embedding, and data vectorization. Engineered secure, high-performance private server and NAS environments using Docker and Linux, utilizing a Python, Node.js, React, and Astro stack.',
   },
   {
     id: '2',
     title: 'Full-Stack Developer',
-    subtitle: 'StartupXYZ · 2021 - 2023',
-    text: 'Built and shipped a real-time collaborative editor from scratch using React and WebSockets. Designed the database schema, implemented CI/CD pipelines, and owned the product from MVP to 10k users.',
+    subtitle: 'Biomy Inc · 2024 - 2026',
+    text: 'Developed a Deep Learning frontend via React and Leaflet for automated cancer cell detection and research visualization. Optimized performance via memoization and Vite migration, cutting re-renders by 60% and reducing API overhead, while establishing a high-reliability Vitest suite in a Dockerized Python/Ruby environment.',
   },
   {
     id: '3',
-    title: 'Junior Developer',
-    subtitle: 'AgencyLab · 2019 - 2021',
-    text: 'Developed responsive landing pages and e-commerce storefronts for 15+ clients. Picked up TypeScript and testing practices, reducing regression bugs by 30% across ongoing projects.',
+    title: 'Software Engineer',
+    subtitle: 'ControlRisk · 2023 - 2024',
+    text: 'Developed high-risk safety audit systems using .NET and React, refactoring legacy components with SOLID principles and custom hooks to maximize global code reusability. Led Azure DevOps CI/CD automation, constructing rigorous unit tests and streamlining deployment pipelines for high-compliance projects utilizing Storybook and SQL Server.',
   },
 ];
