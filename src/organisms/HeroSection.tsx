@@ -149,7 +149,7 @@ export default function HeroSection() {
         <SpeechBubble
           messages={speechData.intro}
           delay={5}
-          arrowPosition="center"
+          arrowPosition="left"
           typingSpeed={100}
           className="absolute -top-16 left-4 w-24"
         />

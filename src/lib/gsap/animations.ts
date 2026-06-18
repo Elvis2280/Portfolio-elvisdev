@@ -339,3 +339,219 @@ export function createExperienceScrollAnimation(
 
   return { ctx, activateTrap, releaseTrap };
 }
+
+export function createSistemaOrbitAnimations(
+  saturnRef: SVGGElement | null,
+  asteroidRef: SVGGElement | null,
+  saturnLine1Ref: SVGGElement | null,
+  saturnLine2Ref: SVGGElement | null,
+  particules1Ref: SVGGElement | null,
+  partciules2Ref: SVGGElement | null,
+  particules3Ref: SVGGElement | null,
+  speedRef: SVGGElement | null,
+  startRef: SVGGElement | null,
+) {
+  if (
+    !saturnRef ||
+    !asteroidRef ||
+    !saturnLine1Ref ||
+    !saturnLine2Ref ||
+    !particules1Ref ||
+    !partciules2Ref ||
+    !particules3Ref ||
+    !speedRef
+  )
+    return null;
+
+  const ctx = gsap.context(() => {
+    gsap.to(saturnRef, {
+      motionPath: {
+        path: '#circle_3',
+        align: '#circle_3',
+        alignOrigin: [0.5, 0.5],
+      },
+      duration: 30,
+      repeat: -1,
+      ease: 'none',
+    });
+
+    gsap.to(asteroidRef, {
+      motionPath: {
+        path: '#circle_2',
+        align: '#circle_2',
+        alignOrigin: [0.5, 0.5],
+        start: 1,
+        end: 0,
+      },
+      duration: 15,
+      repeat: -1,
+      ease: 'none',
+    });
+
+    gsap.set(saturnLine1Ref, { transformOrigin: '50% 50%' });
+    gsap.to(saturnLine1Ref, {
+      y: 5,
+      duration: 3,
+      delay: 0.5,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut',
+    });
+
+    gsap.set(saturnLine2Ref, { transformOrigin: '50% 50%' });
+    gsap.to(saturnLine2Ref, {
+      y: -5,
+      scale: 1.2,
+      duration: 3,
+      delay: 0.5,
+      yoyo: true,
+      repeat: -1,
+      ease: 'sine.inOut',
+    });
+
+    gsap.set(particules1Ref, { transformOrigin: '50% 50%', scale: 0.2 });
+    gsap.to(particules1Ref, {
+      scale: 1,
+      duration: 3,
+      yoyo: true,
+      repeat: -1,
+      repeatDelay: 1,
+      ease: 'sine.inOut',
+    });
+
+    gsap.set(partciules2Ref, { transformOrigin: '50% 50%', scale: 0.5 });
+    gsap.to(partciules2Ref, {
+      scale: 1,
+      duration: 3,
+      yoyo: true,
+      repeat: -1,
+      repeatDelay: 1,
+      ease: 'sine.inOut',
+    });
+
+    gsap.set(particules3Ref, { transformOrigin: '50% 50%' });
+    gsap.to(particules3Ref, {
+      scale: 1.1,
+      duration: 2,
+      yoyo: true,
+      repeat: -1,
+      repeatDelay: 0.5,
+      ease: 'sine.inOut',
+    });
+
+    gsap.to(speedRef, {
+      x: -20,
+      y: 20,
+      duration: 5,
+      yoyo: true,
+      repeat: -1,
+      ease: 'power2.inOut',
+    });
+  });
+
+  gsap.set(startRef, { opacity: 1 });
+  gsap.to(startRef, {
+    opacity: 0.3,
+    duration: 1,
+    yoyo: true,
+    repeat: -1,
+    repeatDelay: 5,
+  });
+
+  return ctx;
+}
+
+export function createOvniProjectAnimations(
+  weaponRef: SVGGElement | null,
+  ovniRef: SVGGElement | null,
+  alienRef: SVGGElement | null,
+  lightColorRef: SVGGElement | null,
+) {
+  if (!weaponRef || !ovniRef || !alienRef || !lightColorRef) return null;
+
+  const ctx = gsap.context(() => {
+    // UFO gentle hover
+    gsap.set(ovniRef, { transformOrigin: '50% 50%' });
+    gsap.to(ovniRef, {
+      y: -8,
+      duration: 4,
+      ease: 'sine.inOut',
+      yoyo: true,
+      repeat: -1,
+    });
+
+    // Alien drops down and returns
+    gsap.to(alienRef, {
+      y: 60,
+      duration: 3,
+      delay: 1,
+      ease: 'power2.inOut',
+      yoyo: true,
+      repeat: -1,
+      repeatDelay: 1,
+    });
+
+    // Beam light blink
+    gsap.to(lightColorRef, {
+      opacity: 0,
+      duration: 0.15,
+      repeat: -1,
+      yoyo: true,
+      repeatDelay: 1.5,
+      ease: 'power1.inOut',
+    });
+  });
+
+  return ctx;
+}
+
+export function createOvniHoverAnimation(
+  weaponRef: SVGGElement | null,
+  ovniRef: SVGGElement | null,
+  lightColorRef: SVGGElement | null,
+) {
+  if (!weaponRef || !ovniRef || !lightColorRef) return null;
+
+  const tl = gsap.timeline();
+
+  gsap.set(weaponRef, { transformOrigin: '50% 50%' });
+  tl.to(
+    weaponRef,
+    {
+      y: -90,
+      duration: 0.5,
+      yoyo: true,
+      repeat: 1,
+      ease: 'power2.out',
+    },
+    0,
+  );
+
+  tl.to(
+    lightColorRef,
+    {
+      opacity: 0,
+      duration: 0.125,
+      repeat: 3,
+      yoyo: true,
+      ease: 'power1.inOut',
+    },
+    0,
+  );
+
+  gsap.set(ovniRef, { transformOrigin: '50% 50%' });
+  tl.to(
+    ovniRef,
+    {
+      x: 5,
+      rotation: 2,
+      duration: 0.1,
+      yoyo: true,
+      repeat: 5,
+      ease: 'power1.inOut',
+    },
+    0,
+  );
+
+  return tl;
+}

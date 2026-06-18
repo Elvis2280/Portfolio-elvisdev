@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 interface SpeechBubbleProps {
   messages: string[];
-  arrowPosition?: 'left' | 'center' | 'right';
+  arrowPosition?: 'left' | 'right';
   className?: string;
   typingSpeed?: number;
   pauseDuration?: number;
@@ -14,7 +14,7 @@ interface SpeechBubbleProps {
 
 export default function SpeechBubble({
   messages,
-  arrowPosition = 'center',
+  arrowPosition = 'left',
   className,
   typingSpeed = 50,
   pauseDuration = 2000,
@@ -86,7 +86,6 @@ export default function SpeechBubble({
   if (!isVisible) return null;
 
   const pointerClasses: Record<string, string> = {
-    center: 'left-1/2 -translate-x-1/2',
     left: 'left-4',
     right: 'right-4',
   };
@@ -96,20 +95,20 @@ export default function SpeechBubble({
       <div
         ref={containerRef}
         className={cn(
-          'relative flex-1 bg-secondary border border-border rounded-lg px-4 py-4 text-foreground text-sm font-mono animate-speech-entrance min-w-80 h-20 overflow-y-scroll scrollbar-none',
+          'relative z-10 flex-1 bg-secondary border border-border rounded-lg px-4 py-4 text-foreground text-sm font-mono animate-speech-entrance min-w-80 h-20 overflow-y-scroll scrollbar-none',
           className,
         )}
       >
         <span>{displayText}</span>
         <span className="animate-pulse">|</span>
-
-        <div
-          className={cn(
-            'absolute bottom-0 translate-y-1/2 w-4 h-4 bg-secondary rotate-45 border-b border-r border-border',
-            pointerClasses[arrowPosition],
-          )}
-        />
       </div>
+
+      <div
+        className={cn(
+          'absolute -bottom-3 translate-x-5 translate-y-1/2 w-6 h-6 bg-secondary rotate-45 border-b border-r border-border z-0',
+          pointerClasses[arrowPosition],
+        )}
+      />
     </div>
   );
 }

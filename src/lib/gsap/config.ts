@@ -1,6 +1,7 @@
 import { gsap } from 'gsap';
+import { MotionPathPlugin } from 'gsap/MotionPathPlugin';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(MotionPathPlugin, ScrollTrigger);
 
 export { gsap, ScrollTrigger };
