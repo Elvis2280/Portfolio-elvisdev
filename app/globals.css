@@ -5,6 +5,7 @@
 @import '../src/styles/typography.css';
 
 @theme inline {
+  --breakpoint-3xl: 1920px;
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-sans);

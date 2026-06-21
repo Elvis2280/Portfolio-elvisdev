@@ -100,7 +100,7 @@ export function createBlinkAnimation(parpadosElement: SVGGElement | null) {
     ease: 'power1.out',
   });
 
-  tl.to({}, { duration: 0.15 });
+  tl.to({}, { duration: 0.3 });
 
   tl.to(paths, {
     scaleY: 0,
@@ -554,4 +554,65 @@ export function createOvniHoverAnimation(
   );
 
   return tl;
+}
+
+export function createNotesAnimation(
+  notesLElement: SVGGElement | null,
+  notesRElement: SVGGElement | null,
+) {
+  if (!notesLElement && !notesRElement) return null;
+
+  const ctx = gsap.context(() => {
+    if (notesLElement) {
+      gsap.set(notesLElement, { x: 150, y: 200, scale: 0, opacity: 0 });
+      const tlL = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+      tlL.to(notesLElement, {
+        x: 0,
+        y: 0,
+        scale: 1,
+        duration: 5,
+        opacity: 1,
+        ease: 'power2.inOut',
+      });
+      tlL.to(notesLElement, {
+        opacity: 0,
+        duration: 1,
+        ease: 'power2.inOut',
+      });
+    }
+
+    if (notesRElement) {
+      gsap.set(notesRElement, { x: -150, y: 200, scale: 0, opacity: 0 });
+      const tlR = gsap.timeline({ repeat: -1, repeatDelay: 1 });
+      const moveR = gsap.timeline();
+      moveR.to(
+        notesRElement,
+        {
+          y: 0,
+          scale: 1,
+          duration: 5,
+          opacity: 1,
+          ease: 'power2.inOut',
+        },
+        0,
+      );
+      moveR.to(
+        notesRElement,
+        {
+          x: 0,
+          duration: 5,
+          ease: 'sine.inOut',
+        },
+        0,
+      );
+      tlR.add(moveR);
+      tlR.to(notesRElement, {
+        opacity: 0,
+        duration: 1,
+        ease: 'power2.inOut',
+      });
+    }
+  });
+
+  return ctx;
 }

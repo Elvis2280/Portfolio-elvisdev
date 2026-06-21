@@ -17,7 +17,7 @@ const Header = () => {
             ElvisDev
           </span>
         </div>
-        <div className="flex gap-12">
+        <div className="gap-12 hidden sm:flex">
           <NavLink href="/">Home</NavLink>
           <NavLink href="/" onClick={handleScrollToProjects}>
             Projects

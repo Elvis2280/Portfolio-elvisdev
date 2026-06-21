@@ -13,16 +13,20 @@ interface ExperienceStepProps {
 }
 
 function Title({ children }: { children: ReactNode }) {
-  return <h3 className="text-step-title">{children}</h3>;
+  return <h3 className="text-step-title md:text-2xl">{children}</h3>;
 }
 
 function Subtitle({ children }: { children: ReactNode }) {
-  return <p className="text-base font-bold text-foreground mt-1">{children}</p>;
+  return (
+    <p className="text-base font-bold text-foreground mt-1 md:text-xl">
+      {children}
+    </p>
+  );
 }
 
 function Text({ children }: { children: ReactNode }) {
   return (
-    <p className="text-body text-muted-foreground/80 mt-2 leading-relaxed max-w-2xl">
+    <p className="text-body text-muted-foreground/80 mt-2 leading-relaxed max-w-2xl md:text-lg">
       {children}
     </p>
   );

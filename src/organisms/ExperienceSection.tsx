@@ -29,30 +29,30 @@ export default function ExperienceSection() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-background pb-8">
+    <section className="relative overflow-hidden bg-background pb-8 ">
       {/* Estrella at top right */}
       <div
         ref={estrellaRef}
-        className="absolute top-1/5 right-4 w-[300px] h-[300px] pointer-events-none z-[5] overflow-visible"
+        className="absolute top-1/5 right-4 w-[450px] h-[450px] pointer-events-none z-[5] overflow-visible hidden"
       >
         <Estrella className="w-full h-full overflow-visible" />
       </div>
 
       {/* Content */}
       <div className="relative z-10 px-4 pt-32 max-w-4xl">
-        <p className="text-caption text-muted-foreground/70">
+        <p className="text-caption text-muted-foreground/70 md:text-lg">
           ~/Portfolio/Experience
         </p>
 
         <h2 className="mt-6">
           <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
-            <span className="text-section bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
+            <span className="text-section md:text-5xl bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
               Working Experience
             </span>
           </span>
         </h2>
 
-        <p className="mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-2xl">
+        <p className="mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-2xl md:text-lg">
           Over the past half-decade, I&apos;ve been deeply immersed in building
           scalable digital products across the full stack. Below are my{' '}
           <span className="text-neon [text-shadow:_0_0_8px_rgba(34,211,238,0.5)]">
@@ -71,7 +71,7 @@ export default function ExperienceSection() {
       </div>
 
       {/* Observatorio absolute at bottom right */}
-      <div className="absolute bottom-[5%] right-[33%] z-[5] pointer-events-none w-[250px] h-[250px] overflow-visible">
+      <div className="absolute bottom-[5%] right-[33%] z-[5] pointer-events-none w-[450px] h-[450px] overflow-visible hidden">
         <Observatorio
           className="w-full h-full overflow-visible"
           miraRef={miraRef}

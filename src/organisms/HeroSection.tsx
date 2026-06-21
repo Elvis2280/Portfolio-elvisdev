@@ -38,7 +38,7 @@ export default function HeroSection() {
       <div className="absolute inset-0 bg-background/80" />
 
       {/* Sun at top right - 50% visible */}
-      <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 w-[36vw] max-w-[450px] aspect-square pointer-events-none z-[5]">
+      <div className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 aspect-square pointer-events-none z-[5] w-[300px] h-[300px] md:w-[500px] md:h-[500px]">
         <Image
           src="/images/decorations/planets/sun.svg"
           alt="Sun decoration"
@@ -48,20 +48,22 @@ export default function HeroSection() {
       </div>
 
       <div className="relative z-10 pt-12 max-w-4xl">
-        <p className="text-caption text-muted-foreground/70">
+        <p className="text-caption text-muted-foreground/70 md:text-lg">
           ~/Portfolio/Main
         </p>
 
         <h1 className="mt-2">
-          <span className="block text-hero text-white">Fullstack</span>
+          <span className="block text-5xl md:text-6xl font-bold text-white">
+            Fullstack
+          </span>
           <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
-            <span className="text-hero bg-gradient-to-br from-neon via-neon-300 to-purple bg-clip-text text-transparent">
+            <span className="text-5xl md:text-6xl font-bold bg-gradient-to-br from-neon via-neon-300 to-purple bg-clip-text text-transparent">
               Developer
             </span>
           </span>
         </h1>
 
-        <p className="mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-xl">
+        <p className="mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-xl md:text-xl">
           Building robust digital solutions from concept to production. Five
           years of experience across{' '}
           <span className="text-neon [text-shadow:_0_0_8px_rgba(34,211,238,0.5)]">
@@ -84,53 +86,61 @@ export default function HeroSection() {
       </div>
 
       {/* Moon + Rings wrapper */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[55vw] lg:w-[57.6vw] min-[1440px]:w-[65vw] min-[1920px]:w-[72vw] max-w-[500px] lg:max-w-[720px] min-[1440px]:max-w-[800px] min-[1920px]:max-w-[900px] aspect-square pointer-events-none z-[5]">
+      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2 w-[55vw] lg:w-[57.6vw] min-[1280px]:w-[60vw] min-[1280px]:max-w-[760px] min-[1440px]:w-[65vw] min-[1920px]:w-[129.6vw] max-w-[500px] lg:max-w-[720px] min-[1440px]:max-w-[800px] min-[1920px]:max-w-[1620px] aspect-square pointer-events-none z-[5]">
         {/* Ring 1: Inner, Clockwise */}
 
-        <MoonRing direction="clockwise" duration={20} scale={1.5}>
-          <FaReact className="text-[32px]" />
+        <MoonRing
+          direction="clockwise"
+          duration={20}
+          className="scale-[2.2] md:scale-[1.7]"
+        >
+          <FaReact className="text-6xl" />
           <Image
             src="/images/decorations/planets/earth.svg"
             alt="Earth"
-            width={32}
-            height={32}
-            className="w-8 h-8 object-contain"
+            width={42}
+            height={42}
+            className="w-12 h-12 object-contain"
           />
           <FaVuejs className="text-[32px]" />
           <RiNextjsFill className="text-[32px]" />
           <Image
             src="/images/decorations/objects/ovni.svg"
             alt="OVNI"
-            width={32}
-            height={32}
-            className="w-8 h-8 object-contain"
+            width={42}
+            height={42}
+            className="w-12 h-12 object-contain"
           />
         </MoonRing>
 
         {/* Ring 2: Outer, Counter-clockwise */}
 
-        <MoonRing direction="counterclockwise" duration={20} scale={1.3}>
-          <FaPython className="text-[32px]" />
+        <MoonRing
+          direction="counterclockwise"
+          duration={20}
+          className="scale-[1.9] md:scale-[1.5]"
+        >
+          <FaPython className="text-[64px]" />
           <Image
             src="/images/decorations/planets/saturn.svg"
             alt="Saturn"
-            width={32}
-            height={32}
-            className="w-8 h-8 object-contain"
+            width={24}
+            height={24}
+            className="w-12 h-12 object-contain"
           />
-          <FaGolang className="text-[32px]" />
-          <FaNodeJs className="text-[32px]" />
+          <FaGolang className="text-[64px]" />
+          <FaNodeJs className="text-[64px]" />
           <Image
             src="/images/decorations/objects/rocket.svg"
             alt="Rocket"
-            width={32}
-            height={32}
-            className="w-8 h-8 object-contain"
+            width={24}
+            height={24}
+            className="w-12 h-12 object-contain"
           />
         </MoonRing>
 
         {/* Moon at center */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[75%] h-[75%]">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  w-[400px] h-[400px] md:w-[600px] md:h-[600px]">
           <Image
             src="/images/decorations/planets/moon.svg"
             alt="Moon decoration"
@@ -144,20 +154,20 @@ export default function HeroSection() {
       {/* Astronaut floating above the moon */}
       <div
         ref={astronautRef}
-        className="absolute bottom-[200px] lg:bottom-[250px] min-[1440px]:bottom-[325px] min-[1920px]:bottom-[400px] left-1/2 -translate-x-1/2 w-[250px] h-[250px] lg:w-[300px] lg:h-[300px] min-[1440px]:w-[325px] min-[1440px]:h-[325px] min-[1920px]:w-[350px] min-[1920px]:h-[350px] pointer-events-none z-[7]"
+        className="absolute bottom-[120px] left-1/2 -translate-x-1/2  pointer-events-none z-[7] w-[200px] h-[200px] sm:w-[250px] sm:h-[250px] md:w-[300px] md:h-[300px] md:bottom-[250px]"
       >
         <SpeechBubble
           messages={speechData.intro}
           delay={5}
           arrowPosition="left"
           typingSpeed={100}
-          className="absolute -top-16 left-4 w-24"
+          className="absolute -top-16 left-4 w-24 md:-top-28"
         />
         <ConchoAstronaut className="w-full h-full" parpadosRef={parpadosRef} />
       </div>
 
       {/* Smooth fade at section bottom — gradual transition over 192px */}
-      <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-background via-background/50 to-transparent z-[6] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 right-0 h-48 bg-linear-to-t from-background via-background/50 to-transparent z-[6] pointer-events-none" />
     </section>
   );
 }

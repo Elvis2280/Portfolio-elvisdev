@@ -7,6 +7,7 @@ interface MoonRingProps {
   direction?: 'clockwise' | 'counterclockwise';
   duration?: number;
   scale?: number;
+  className?: string;
 }
 
 function pseudoRandom(seed: number): number {
@@ -19,6 +20,7 @@ export default function MoonRing({
   direction = 'clockwise',
   duration = 20,
   scale = 1.5,
+  className = '',
 }: MoonRingProps) {
   const items = React.Children.toArray(children).slice(0, 5);
 
@@ -54,7 +56,7 @@ export default function MoonRing({
 
   return (
     <div
-      className={`absolute aspect-square rounded-full border border-border/50 ${spinClass}`}
+      className={`absolute aspect-square rounded-full border border-border/50 ${spinClass} ${className}`}
       style={{
         width: `${ringWidthPercent}%`,
         height: `${ringWidthPercent}%`,
@@ -82,7 +84,7 @@ export default function MoonRing({
             }}
           >
             <div
-              className={`w-8 h-8 flex items-center justify-center text-white ${itemSpinClass}`}
+              className={`w-5 h-5 md:w-8 md:h-8 flex items-center justify-center text-white ${itemSpinClass}`}
               style={{ animationDuration: `${duration}s` }}
             >
               {child}
