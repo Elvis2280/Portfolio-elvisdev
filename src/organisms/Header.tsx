@@ -19,17 +19,17 @@ const Header = () => {
           </span>
         </div>
         <div className="gap-12 hidden md:flex">
-          <NavLink className="text-xl lg:text-2xl" href="/">
+          <NavLink className="text-xl lg:text-xl" href="/">
             Home
           </NavLink>
           <NavLink
-            className="text-xl lg:text-2xl"
+            className="text-xl lg:text-xl"
             href="/"
             onClick={handleScrollToProjects}
           >
             Projects
           </NavLink>
-          <NavLink className="text-xl lg:text-2xl" href="/">
+          <NavLink className="text-xl lg:text-xl" href="/">
             Contact
           </NavLink>
         </div>

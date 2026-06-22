@@ -47,7 +47,7 @@ export default function ProjectsSection() {
 
           <h2 id="project-section" className="mt-6">
             <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
-              <span className="text-section bg-gradient-to-r from-white to-neon bg-clip-text text-transparent md:text-5xl xl:text-6xl 2xl:text-7xl">
+              <span className="text-section bg-gradient-to-r from-white to-neon bg-clip-text text-transparent md:text-5xl xl:text-5xl 2xl:text-7xl">
                 Featured Projects
               </span>
             </span>
@@ -56,7 +56,7 @@ export default function ProjectsSection() {
 
         <div className="px-4 mt-8 mx-auto">
           <div className="w-full mb-8 md:mb-4">
-            <p className="text-body text-muted-foreground/80 leading-relaxed md:text-lg xl:text-xl">
+            <p className="text-body text-muted-foreground/80 leading-relaxed md:text-lg xl:text-lg">
               I believe the best applications are built with a{' '}
               <span className="text-neon [text-shadow:_0_0_8px_rgba(34,211,238,0.5)]">
                 solid foundation{' '}
@@ -81,7 +81,7 @@ export default function ProjectsSection() {
       </div>
 
       <div className="grow grid grid-rows-[1fr_100px] pb-8">
-        <div className="relative overflow-visible flex justify-center items-center">
+        <div className="relative overflow-visible flex justify-center items-center ">
           <SistemaUnifiedAnimated className="w-full aspect-[968/824] xl:max-w-3xl 2xl:max-w-4xl overflow-visible" />
         </div>
         <div className="flex items-center justify-center mt-20">

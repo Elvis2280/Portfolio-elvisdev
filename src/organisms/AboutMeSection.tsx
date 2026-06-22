@@ -31,7 +31,7 @@ export default function AboutMeSection() {
 
           <h2 className="mt-6">
             <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
-              <span className="text-section md:text-5xl xl:text-6xl 2xl:text-7xl bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
+              <span className="text-section md:text-5xl xl:text-5xl 2xl:text-7xl bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
                 Getting to Know Me
               </span>
             </span>
@@ -40,7 +40,7 @@ export default function AboutMeSection() {
 
         <div className="relative z-10 px-4 flex items-start gap-8 mt-12 flex-col">
           <div className="flex-1 max-w-2xl xl:max-w-4xl">
-            <p className="text-body text-muted-foreground/80 leading-relaxed md:text-lg xl:text-xl">
+            <p className="text-body text-muted-foreground/80 leading-relaxed md:text-lg xl:text-lg">
               Concho handled the intro, so let&apos;s look under the hood. I am
               a{' '}
               <span className="text-neon [text-shadow:_0_0_8px_rgba(34,211,238,0.5)]">

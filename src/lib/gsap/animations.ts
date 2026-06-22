@@ -615,3 +615,80 @@ export function createNotesAnimation(
 
   return ctx;
 }
+
+export function createHeadSway(headElement: SVGGElement | null) {
+  if (!headElement) return null;
+
+  gsap.set(headElement, { transformOrigin: '50% 50%' });
+
+  return gsap.to(headElement, {
+    rotation: 4,
+    duration: 1.2,
+    yoyo: true,
+    repeat: -1,
+    ease: 'sine.inOut',
+  });
+}
+
+export function createAlbumOrbit(
+  element: HTMLElement | null,
+  pathSelector: string,
+  onRepeat?: () => void,
+) {
+  if (!element) return null;
+
+  const tl = gsap.timeline({
+    repeat: -1,
+    ease: 'none',
+    onRepeat,
+  });
+
+  gsap.set(element, {
+    motionPath: {
+      path: pathSelector,
+      align: pathSelector,
+      alignOrigin: [0.5, 0.5],
+      start: 0,
+    },
+    scale: 0,
+    opacity: 0,
+  });
+
+  tl.to(
+    element,
+    {
+      motionPath: {
+        path: pathSelector,
+        align: pathSelector,
+        alignOrigin: [0.5, 0.5],
+      },
+      duration: 7,
+      ease: 'none',
+    },
+    0,
+  );
+
+  tl.to(
+    element,
+    {
+      scale: 1,
+      opacity: 1,
+      duration: 1,
+      ease: 'power2.out',
+    },
+    0,
+  );
+
+  tl.to(
+    element,
+    {
+      scale: 0,
+      opacity: 0,
+      duration: 1,
+      ease: 'power2.in',
+    },
+    6,
+  );
+
+  return tl;
+}

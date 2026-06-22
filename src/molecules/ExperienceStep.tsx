@@ -14,7 +14,7 @@ interface ExperienceStepProps {
 
 function Title({ children }: { children: ReactNode }) {
   return (
-    <h3 className="text-step-title md:text-2xl xl:text-3xl 2xl:text-4xl">
+    <h3 className="text-step-title md:text-2xl xl:text-2xl 2xl:text-4xl">
       {children}
     </h3>
   );
@@ -22,7 +22,7 @@ function Title({ children }: { children: ReactNode }) {
 
 function Subtitle({ children }: { children: ReactNode }) {
   return (
-    <p className="text-base font-bold text-foreground mt-1 md:text-xl xl:text-2xl 2xl:text-3xl">
+    <p className="text-base font-bold text-foreground mt-1 md:text-xl xl:text-xl 2xl:text-3xl">
       {children}
     </p>
   );
@@ -30,7 +30,7 @@ function Subtitle({ children }: { children: ReactNode }) {
 
 function Text({ children }: { children: ReactNode }) {
   return (
-    <p className="text-body text-muted-foreground/80 mt-2 leading-relaxed max-w-2xl md:text-lg xl:text-xl">
+    <p className="text-body text-muted-foreground/80 mt-2 leading-relaxed max-w-2xl md:text-lg">
       {children}
     </p>
   );

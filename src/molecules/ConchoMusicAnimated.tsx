@@ -5,7 +5,10 @@ import ConchoMusic from '@/atoms/ConchoMusic';
 import {
   createBlinkAnimation,
   createNotesAnimation,
+  createHeadSway,
+  createAlbumOrbit,
 } from '@/lib/gsap/animations';
+import { gsap } from '@/lib/gsap/config';
 import { IoBatteryFull } from 'react-icons/io5';
 import {
   TbPlayerSkipBackFilled,
@@ -37,7 +40,16 @@ export default function ConchoMusicAnimated({
   const audifonoRRef = useRef<SVGGElement>(null);
   const pantallaRef = useRef<SVGGElement>(null);
   const parpadosRef = useRef<SVGGElement>(null);
+  const headRef = useRef<SVGGElement>(null);
+  const leftAlbumContainerRef = useRef<HTMLDivElement>(null);
+  const rightAlbumContainerRef = useRef<HTMLDivElement>(null);
+  const leftOrbitRef = useRef<gsap.core.Animation | null>(null);
+  const rightOrbitRef = useRef<gsap.core.Animation | null>(null);
+  const headSwayRef = useRef<gsap.core.Tween | null>(null);
   const [pantallaBBox, setPantallaBBox] = useState<DOMRect | null>(null);
+  const [activeLeftAlbum, setActiveLeftAlbum] = useState<React.ReactNode>(null);
+  const [activeRightAlbum, setActiveRightAlbum] =
+    useState<React.ReactNode>(null);
 
   useEffect(() => {
     if (pantallaRef.current) {
@@ -57,6 +69,74 @@ export default function ConchoMusicAnimated({
     };
   }, []);
 
+  useEffect(() => {
+    if (!playingData?.isPlaying) {
+      leftOrbitRef.current?.kill();
+      rightOrbitRef.current?.kill();
+      headSwayRef.current?.kill();
+      gsap.set(headRef.current, { rotation: 0 });
+      leftOrbitRef.current = null;
+      rightOrbitRef.current = null;
+      headSwayRef.current = null;
+
+      queueMicrotask(() => {
+        setActiveLeftAlbum(null);
+        setActiveRightAlbum(null);
+      });
+
+      return;
+    }
+
+    const albums = [
+      YHLQMDLGN,
+      nadie_sabe_loque_vapasar,
+      ultimo_tour,
+      un_verano_sin_ti,
+      x100pre,
+    ];
+
+    const pick = () => albums[Math.floor(Math.random() * albums.length)];
+
+    queueMicrotask(() => {
+      const LeftAlbum = pick();
+      const RightAlbum = pick();
+      setActiveLeftAlbum(<LeftAlbum />);
+      setActiveRightAlbum(<RightAlbum />);
+    });
+
+    headSwayRef.current = createHeadSway(headRef.current);
+
+    requestAnimationFrame(() => {
+      leftOrbitRef.current = createAlbumOrbit(
+        leftAlbumContainerRef.current,
+        '#STROKE_4ecd9116-ec81-4159-8967-4aa59d9251cc',
+        () => {
+          const NextAlbum = pick();
+          setActiveLeftAlbum(<NextAlbum />);
+        },
+      );
+
+      rightOrbitRef.current = createAlbumOrbit(
+        rightAlbumContainerRef.current,
+        '#audifonoR > path:first-of-type',
+        () => {
+          const NextAlbum = pick();
+          setActiveRightAlbum(<NextAlbum />);
+        },
+      );
+    });
+
+    return () => {
+      leftOrbitRef.current?.kill();
+      rightOrbitRef.current?.kill();
+      headSwayRef.current?.kill();
+      gsap.set(headRef.current, { rotation: 0 });
+      leftOrbitRef.current = null;
+      rightOrbitRef.current = null;
+      headSwayRef.current = null;
+    };
+  }, [playingData?.isPlaying]);
+
   return (
     <div className={`relative ${className ?? ''}`}>
       <ConchoMusic
@@ -67,7 +147,20 @@ export default function ConchoMusicAnimated({
         audifonoRRef={audifonoRRef}
         pantallaRef={pantallaRef}
         parpadosRef={parpadosRef}
+        headRef={headRef}
       />
+      <div
+        ref={leftAlbumContainerRef}
+        className="absolute w-16 h-16 z-10 pointer-events-none"
+      >
+        {activeLeftAlbum}
+      </div>
+      <div
+        ref={rightAlbumContainerRef}
+        className="absolute w-16 h-16 z-10 pointer-events-none"
+      >
+        {activeRightAlbum}
+      </div>
       {pantallaBBox && (
         <div
           className="absolute border-2 border-background bg-background bg-center"
@@ -167,14 +260,14 @@ const IpodPlayingMusic = ({
 
 const YHLQMDLGN = () => (
   <div
-    className="w-16 h-16 bg-cover bg-center"
+    className="w-12 h-12 bg-cover bg-center rounded-md"
     style={{ backgroundImage: "url('/images/album_pictures/YHLQMDLGN.webp')" }}
   />
 );
 
 const nadie_sabe_loque_vapasar = () => (
   <div
-    className="w-16 h-16 bg-cover bg-center"
+    className="w-12 h-12 bg-cover bg-center rounded-md"
     style={{
       backgroundImage:
         "url('/images/album_pictures/nadie-sabe_loque_vapasar.webp')",
@@ -184,7 +277,7 @@ const nadie_sabe_loque_vapasar = () => (
 
 const ultimo_tour = () => (
   <div
-    className="w-16 h-16 bg-cover bg-center"
+    className="w-12 h-12 bg-cover bg-center rounded-md"
     style={{
       backgroundImage: "url('/images/album_pictures/ultimo_tour.webp')",
     }}
@@ -193,7 +286,7 @@ const ultimo_tour = () => (
 
 const un_verano_sin_ti = () => (
   <div
-    className="w-16 h-16 bg-cover bg-center"
+    className="w-12 h-12 bg-cover bg-center rounded-md"
     style={{
       backgroundImage: "url('/images/album_pictures/un_verano_sin_ti.webp')",
     }}
@@ -202,7 +295,7 @@ const un_verano_sin_ti = () => (
 
 const x100pre = () => (
   <div
-    className="w-16 h-16 bg-cover bg-center"
+    className="w-12 h-12 bg-cover bg-center rounded-md"
     style={{ backgroundImage: "url('/images/album_pictures/x100pre.webp')" }}
   />
 );
