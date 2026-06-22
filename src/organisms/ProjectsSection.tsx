@@ -41,7 +41,7 @@ export default function ProjectsSection() {
       <div className="xl:min-w-xl max-w-xl">
         {/* Content */}
         <div className="relative z-10 px-4 pt-4">
-          <p className="text-caption text-muted-foreground/70 md:text-lg xl:text-xl">
+          <p className="text-caption text-muted-foreground/70 md:text-lg">
             ~/Portfolio/Projects
           </p>
 

@@ -4,11 +4,11 @@ import { FaGithub } from 'react-icons/fa';
 
 export default function Footer() {
   return (
-    <footer className="relative h-[72px] p-4 bg-background/80 backdrop-blur-md border-t border-border/50 shadow-[0_-4px_32px_rgba(34,211,238,0.18)]">
+    <footer className="relative min-h-[72px] p-4 bg-background/80 backdrop-blur-md border-t border-border/50 shadow-[0_-4px_32px_rgba(34,211,238,0.18)] py-4">
       {/* Neon cyan glow line at top edge */}
       <div className="absolute -top-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon/40 to-transparent" />
 
-      <div className="flex justify-between items-center h-full">
+      <div className="flex justify-between items-center h-full flex flex-col lg:flex-row gap-4">
         {/* Left: ElvisDev with animation */}
         <span className="relative font-bold text-2xl text-white/90 animate-header-blink">
           ElvisDev

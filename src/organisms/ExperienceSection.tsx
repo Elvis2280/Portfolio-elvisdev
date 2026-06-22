@@ -40,7 +40,7 @@ export default function ExperienceSection() {
 
       {/* Content */}
       <div className="relative z-10 px-4 pt-32 max-w-4xl">
-        <p className="text-caption text-muted-foreground/70 md:text-lg xl:text-xl">
+        <p className="text-caption text-muted-foreground/70 md:text-lg">
           ~/Portfolio/Experience
         </p>
 

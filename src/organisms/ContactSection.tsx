@@ -4,7 +4,7 @@ export default function ContactSection() {
   return (
     <section className="relative overflow-hidden bg-background pb-8">
       <div className="relative z-10 px-4 pt-8 max-w-4xl">
-        <p className="text-caption text-muted-foreground/70 md:text-lg xl:text-xl">
+        <p className="text-caption text-muted-foreground/70 md:text-lg ">
           ~/Portfolio/Contact
         </p>
 

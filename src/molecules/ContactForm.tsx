@@ -43,6 +43,7 @@ const ContactForm = () => {
           placeholder="your@email.com"
           disabled={isSubmitting}
           aria-invalid={!!errors.email}
+          className="bg-secondary/50 h-12"
           {...register('email')}
         />
         {errors.email && (
@@ -58,7 +59,7 @@ const ContactForm = () => {
           <Textarea
             placeholder="Tell me about your project..."
             disabled={isSubmitting}
-            className="h-[200px] resize-none pr-16"
+            className="h-[200px] resize-none pr-16 bg-secondary/50"
             aria-invalid={!!errors.message}
             {...register('message')}
           />

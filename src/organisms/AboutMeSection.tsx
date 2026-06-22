@@ -25,7 +25,7 @@ export default function AboutMeSection() {
       {/* Content */}
       <div className=" 2xl:min-w-3xl">
         <div className="relative z-10 px-4 pt-12 max-w-4xl">
-          <p className="text-caption text-muted-foreground/70 md:text-lg xl:text-xl">
+          <p className="text-caption text-muted-foreground/70 md:text-lg">
             ~/Portfolio/About
           </p>
 
@@ -90,7 +90,7 @@ export default function AboutMeSection() {
       </div>
       <div className="flex justify-center w-full">
         <ConchoMusicAnimated
-          className="w-[350px] md:w-[500px] 2xl:w-[700px] 3xl:w-[900px]"
+          className="w-[350px] md:w-[500px] 2xl:w-[700px] 3xl:w-[900px] mt-10 xl:mt-2"
           playingData={playingSpotifyData}
         />
       </div>
