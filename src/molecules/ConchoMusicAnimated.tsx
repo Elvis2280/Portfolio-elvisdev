@@ -70,16 +70,49 @@ export default function ConchoMusicAnimated({
   }, []);
 
   useEffect(() => {
+    if (!playingData?.isPlaying) {
+      const paths = parpadosRef.current?.querySelectorAll('path');
+      if (paths) {
+        gsap.set(paths, {
+          scaleY: 1,
+          opacity: 1,
+          transformOrigin: 'top center',
+        });
+      }
+      if (notesLRef.current) {
+        gsap.set(notesLRef.current, { opacity: 0, scale: 0 });
+      }
+      if (notesRRef.current) {
+        gsap.set(notesRRef.current, { opacity: 0, scale: 0 });
+      }
+      return;
+    }
+
     const blinkAnim = createBlinkAnimation(parpadosRef.current);
     const notesAnim = createNotesAnimation(
       notesLRef.current,
       notesRRef.current,
     );
+
     return () => {
       blinkAnim?.kill();
       notesAnim?.revert();
+      const paths = parpadosRef.current?.querySelectorAll('path');
+      if (paths) {
+        gsap.set(paths, {
+          scaleY: 1,
+          opacity: 1,
+          transformOrigin: 'top center',
+        });
+      }
+      if (notesLRef.current) {
+        gsap.set(notesLRef.current, { opacity: 0, scale: 0 });
+      }
+      if (notesRRef.current) {
+        gsap.set(notesRRef.current, { opacity: 0, scale: 0 });
+      }
     };
-  }, []);
+  }, [playingData?.isPlaying]);
 
   useEffect(() => {
     if (!playingData?.isPlaying) {
@@ -135,7 +168,7 @@ export default function ConchoMusicAnimated({
 
   return (
     <div className={`relative ${className ?? ''}`}>
-      <div className="absolute -top-10 xl:top-0 2xl:top-1 left-1/2 -translate-x-1/2 z-20 pointer-events-none w-full max-w-xs flex justify-center">
+      <div className="absolute top-1 xl:top-0 2xl:top-1 left-1/2 -translate-x-1/2 z-20 pointer-events-none w-full max-w-xs flex justify-center">
         {playingData?.isPlaying ? (
           <SpeechBubble
             key={playingData.title}
@@ -189,7 +222,7 @@ export default function ConchoMusicAnimated({
       </ConchoMusic>
       {pantallaBBox && (
         <div
-          className="absolute border-2 border-background bg-background bg-center"
+          className="absolute border-2 border-background bg-background bg-center translate-y-4 xl:translate-y-2 xl:-translate-x-0.5"
           style={{
             left: `${(pantallaBBox.x / SVG_WIDTH) * 100}%`,
             top: `${(pantallaBBox.y / SVG_HEIGHT) * 100}%`,
@@ -198,7 +231,7 @@ export default function ConchoMusicAnimated({
             backgroundImage: `url('/images/album_pictures/x100pre.webp'})`,
           }}
         >
-          {playingData ? (
+          {playingData?.isPlaying ? (
             <a
               href={playingData.songUrl}
               target="_blank"
@@ -225,18 +258,18 @@ const IpodNoPlayingMusic = () => {
       </div>
       <div className="text-[10px] flex flex-col gap-1">
         <p className="text-center text-[6px] bg-background/70 px-1">
-          Elvis is not listening music ☹️
+          Elvis is not listening music
         </p>
       </div>
-      <div className="flex gap-2 text-black text-sm">
+      <div className="flex gap-2 text-black text-sm mt-0.5">
         <span className="w-4 h-4 rounded-full text-white flex items-center justify-center ">
-          <TbPlayerSkipBackFilled size={12} />
+          <TbPlayerSkipBackFilled size={8} />
         </span>
         <span className="w-4 h-4 rounded-full bg-white flex items-center justify-center ">
-          <TbPlayerPlayFilled size={12} />
+          <TbPlayerPlayFilled size={8} />
         </span>
         <span className="w-4 h-4 rounded-full text-white  flex items-center justify-center">
-          <TbPlayerSkipForwardFilled size={12} />
+          <TbPlayerSkipForwardFilled size={8} />
         </span>
       </div>
     </div>
