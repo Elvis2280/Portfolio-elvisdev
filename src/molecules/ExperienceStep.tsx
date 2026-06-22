@@ -53,7 +53,7 @@ function ExperienceStep({
       </div>
       <div
         ref={textRef}
-        className="w-fit pb-16 opacity-0 bg-background/50 rounded-lg p-4 relative z-10"
+        className="w-fit pb-16 bg-background/50 rounded-lg p-4 relative z-10 opacity-0"
       >
         {children}
       </div>

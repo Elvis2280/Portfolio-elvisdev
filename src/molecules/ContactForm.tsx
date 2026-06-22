@@ -35,9 +35,12 @@ const ContactForm = () => {
       className="flex flex-col gap-6 mt-10 w-full max-w-xl px-4"
     >
       <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-muted-foreground">
+          Email
+        </label>
         <Input
           type="email"
-          placeholder="Email"
+          placeholder="your@email.com"
           disabled={isSubmitting}
           aria-invalid={!!errors.email}
           {...register('email')}
@@ -48,9 +51,12 @@ const ContactForm = () => {
       </div>
 
       <div className="flex flex-col gap-1.5">
+        <label className="text-sm font-medium text-muted-foreground">
+          Message
+        </label>
         <div className="relative">
           <Textarea
-            placeholder="Message"
+            placeholder="Tell me about your project..."
             disabled={isSubmitting}
             className="h-[200px] resize-none pr-16"
             aria-invalid={!!errors.message}

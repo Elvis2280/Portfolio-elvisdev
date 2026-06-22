@@ -18,8 +18,27 @@ export const metadata: Metadata = {
   title: 'Elvis Miranda - Personal Portfolio',
   description:
     'A personal portfolio showcasing the projects and skills of Elvis Miranda, a Latin American developer building software for the world.',
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+  ),
   icons: {
     icon: '/favicon.webp',
+  },
+  openGraph: {
+    title: 'Elvis Miranda | Full Stack Developer Portfolio',
+    description:
+      'Explore projects, experience, and skills of Elvis Miranda, a developer building modern web applications.',
+    url: '/',
+    siteName: 'Developer Portfolio',
+    images: [
+      {
+        url: '/preview.webp',
+        width: 2982,
+        height: 1634,
+        alt: 'Portfolio Preview',
+      },
+    ],
+    type: 'website',
   },
 };
 

@@ -1,6 +1,25 @@
+'use client';
 import ConchoMusicAnimated from '@/molecules/ConchoMusicAnimated';
+import { spotifyCurrentPlayingData } from '@/types/spotify';
+import { useEffect, useState } from 'react';
 
 export default function AboutMeSection() {
+  const [playingSpotifyData, setPlayingSpotifyData] =
+    useState<null | spotifyCurrentPlayingData>();
+
+  useEffect(() => {
+    const fetchSpotifyNowListening = () => {
+      fetch('/api/nowPlaying')
+        .then((res) => res.json())
+        .then((res_json: spotifyCurrentPlayingData) =>
+          setPlayingSpotifyData(res_json),
+        );
+    };
+    fetchSpotifyNowListening();
+  }, []);
+
+  console.log(playingSpotifyData);
+
   return (
     <section className="relative overflow-hidden bg-background pb-8 2xl:flex 2xl:gap-6 ">
       {/* Content */}
@@ -70,7 +89,10 @@ export default function AboutMeSection() {
         </div>
       </div>
       <div className="flex justify-center w-full">
-        <ConchoMusicAnimated className="w-[350px] md:w-[500px] 2xl:w-[700px] 3xl:w-[900px]" />
+        <ConchoMusicAnimated
+          className="w-[350px] md:w-[500px] 2xl:w-[700px] 3xl:w-[900px]"
+          playingData={playingSpotifyData}
+        />
       </div>
     </section>
   );

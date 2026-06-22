@@ -71,7 +71,7 @@ export default function ExperienceSection() {
       </div>
 
       {/* Observatorio absolute at bottom right */}
-      <div className="absolute bottom-[5%] right-[33%] z-[1] pointer-events-none w-[450px] h-[450px] overflow-visible hidden xl:block xl:left-[50%]">
+      <div className="absolute bottom-[5%] right-[33%] z-[1] pointer-events-none w-[300px] h-[300px] overflow-visible hidden xl:block xl:left-[50%]">
         <Observatorio
           className="w-full h-full overflow-visible"
           miraRef={miraRef}

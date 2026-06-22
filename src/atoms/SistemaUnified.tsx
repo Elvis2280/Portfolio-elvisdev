@@ -65,7 +65,7 @@ export default function SistemaUnified({
             <circle id="Ellipse 37" cx="645.205" cy="769.492" r="11.211" />
             <circle id="Ellipse 38" cx="330.914" cy="507.003" r="12.371" />
           </g>
-          <g id="asteroid" ref={asteroidRef} clip-path="url(#clip0_322_155)">
+          <g id="asteroid" ref={asteroidRef} clipPath="url(#clip0_322_155)">
             <g id="asteroid_fill">
               <path
                 id="STROKE_982b65f0-579e-4a81-b7ba-75d9bc5001e0"

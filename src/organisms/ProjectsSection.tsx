@@ -37,10 +37,10 @@ export default function ProjectsSection() {
     return pages;
   };
   return (
-    <section className="relative overflow-hidden bg-background 2xl:flex 2xl:gap-6 ">
-      <div className="min-w-xl max-w-2xl">
+    <section className="relative overflow-hidden bg-background 2xl:flex 2xl:gap-6">
+      <div className="xl:min-w-xl max-w-xl">
         {/* Content */}
-        <div className="relative z-10 px-4 pt-4 max-w-2xl">
+        <div className="relative z-10 px-4 pt-4">
           <p className="text-caption text-muted-foreground/70 md:text-lg xl:text-xl">
             ~/Portfolio/Projects
           </p>
@@ -54,8 +54,8 @@ export default function ProjectsSection() {
           </h2>
         </div>
 
-        <div className="flex items-start gap-8 px-4 mt-8 mx-auto flex-col xl:block">
-          <div className="w-full mb-8 md:mb-32">
+        <div className="px-4 mt-8 mx-auto">
+          <div className="w-full mb-8 md:mb-4">
             <p className="text-body text-muted-foreground/80 leading-relaxed md:text-lg xl:text-xl">
               I believe the best applications are built with a{' '}
               <span className="text-neon [text-shadow:_0_0_8px_rgba(34,211,238,0.5)]">
@@ -80,9 +80,9 @@ export default function ProjectsSection() {
         </div>
       </div>
 
-      <div className="grow grid grid-rows-[1fr_100px]">
+      <div className="grow grid grid-rows-[1fr_100px] pb-8">
         <div className="relative overflow-visible flex justify-center items-center">
-          <SistemaUnifiedAnimated className="w-full aspect-[968/824] max-w-4xl overflow-visible" />
+          <SistemaUnifiedAnimated className="w-full aspect-[968/824] xl:max-w-3xl 2xl:max-w-4xl overflow-visible" />
         </div>
         <div className="flex items-center justify-center mt-20">
           <Pagination>

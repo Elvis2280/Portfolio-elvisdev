@@ -16,6 +16,7 @@ const attrMap = [
   [/stroke-linejoin/g, 'strokeLinejoin'],
   [/stroke-width/g, 'strokeWidth'],
   [/fill-rule/g, 'fillRule'],
+  [/clip-path/g, 'clipPath'],
   [/clip-rule/g, 'clipRule'],
   [/stroke-dasharray/g, 'strokeDasharray'],
   [/stroke-dashoffset/g, 'strokeDashoffset'],
