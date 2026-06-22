@@ -78,12 +78,6 @@ export default function ConchoMusicAnimated({
       leftOrbitRef.current = null;
       rightOrbitRef.current = null;
       headSwayRef.current = null;
-
-      queueMicrotask(() => {
-        setActiveLeftAlbum(null);
-        setActiveRightAlbum(null);
-      });
-
       return;
     }
 
@@ -134,6 +128,8 @@ export default function ConchoMusicAnimated({
       leftOrbitRef.current = null;
       rightOrbitRef.current = null;
       headSwayRef.current = null;
+      setActiveLeftAlbum(null);
+      setActiveRightAlbum(null);
     };
   }, [playingData?.isPlaying]);
 
@@ -220,24 +216,28 @@ const IpodPlayingMusic = ({
     <div className="text-white p-1 flex flex-col items-center justify-between h-full">
       <div className=" flex justify-between items-center w-full">
         <span> </span>
-        <p className="text-[6px]">IPOD</p>
-        <IoBatteryFull className="text-[8px]" />
+        <p className="text-[3px] xl:text-[6px]">IPOD</p>
+        <IoBatteryFull className="text-[6px] xl:text-[8px]" />
       </div>
       <div className="text-[10px] flex flex-col gap-1">
         <Image
           src={playingData.albumImageUrl}
-          width={24}
-          height={24}
+          width={18}
+          height={18}
           alt="spotify album cover"
         />
       </div>
       <div>
-        <div className="flex flex-col">
-          <span className=" text-[4px]">{playingData.title}</span>
-          <span className="text-[4px]">{playingData.artist}</span>
+        <div className="flex flex-col w-full min-w-0">
+          <span className="text-[3px] xl:text-[4px] font-medium block truncate">
+            {playingData.title}
+          </span>
+          <span className="text-[3px] xl:text-[4px] text-zinc-400 block truncate">
+            {playingData.artist}
+          </span>
         </div>
         <div className="flex gap-2 text-black text-sm">
-          <span className="w-2 h-2 rounded-full text-white flex items-center justify-center ">
+          <span className="hidden xl:flex w-2 h-2 rounded-full text-white items-center justify-center ">
             <FaRandom size={6} />
           </span>
           <span className="w-2 h-2 rounded-full text-white flex items-center justify-center ">
@@ -249,7 +249,7 @@ const IpodPlayingMusic = ({
           <span className="w-2 h-2 rounded-full text-white  flex items-center justify-center">
             <TbPlayerSkipForwardFilled size={6} />
           </span>
-          <span className="w-2 h-2 rounded-full text-white flex items-center justify-center ">
+          <span className="hidden xl:flex w-2 h-2 rounded-full text-white items-center justify-center ">
             <FaRepeat size={6} />
           </span>
         </div>
@@ -260,14 +260,14 @@ const IpodPlayingMusic = ({
 
 const YHLQMDLGN = () => (
   <div
-    className="w-12 h-12 bg-cover bg-center rounded-md"
+    className="w-8 h-8 lg:w-12 lg:h-12  bg-cover bg-center rounded-md"
     style={{ backgroundImage: "url('/images/album_pictures/YHLQMDLGN.webp')" }}
   />
 );
 
 const nadie_sabe_loque_vapasar = () => (
   <div
-    className="w-12 h-12 bg-cover bg-center rounded-md"
+    className="w-8 h-8 lg:w-12 lg:h-12 bg-cover bg-center rounded-md"
     style={{
       backgroundImage:
         "url('/images/album_pictures/nadie-sabe_loque_vapasar.webp')",
@@ -277,7 +277,7 @@ const nadie_sabe_loque_vapasar = () => (
 
 const ultimo_tour = () => (
   <div
-    className="w-12 h-12 bg-cover bg-center rounded-md"
+    className="w-8 h-8 lg:w-12 lg:h-12 bg-cover bg-center rounded-md"
     style={{
       backgroundImage: "url('/images/album_pictures/ultimo_tour.webp')",
     }}
@@ -286,7 +286,7 @@ const ultimo_tour = () => (
 
 const un_verano_sin_ti = () => (
   <div
-    className="w-12 h-12 bg-cover bg-center rounded-md"
+    className="w-8 h-8 lg:w-12 lg:h-12 bg-cover bg-center rounded-md"
     style={{
       backgroundImage: "url('/images/album_pictures/un_verano_sin_ti.webp')",
     }}
@@ -295,7 +295,7 @@ const un_verano_sin_ti = () => (
 
 const x100pre = () => (
   <div
-    className="w-12 h-12 bg-cover bg-center rounded-md"
+    className="w-8 h-8 lg:w-12 lg:h-12 bg-cover bg-center rounded-md"
     style={{ backgroundImage: "url('/images/album_pictures/x100pre.webp')" }}
   />
 );
