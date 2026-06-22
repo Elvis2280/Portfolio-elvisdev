@@ -1,19 +1,29 @@
 import Link from 'next/link';
+import { cn } from '@/lib/utils';
 
 interface NavLinkProps {
   href: string;
   children: React.ReactNode;
   onClick?: () => void;
+  className?: string;
 }
 
-export default function NavLink({ href, children, onClick }: NavLinkProps) {
+export default function NavLink({
+  href,
+  children,
+  onClick,
+  className,
+}: NavLinkProps) {
   return (
     <Link
       onClick={onClick}
       href={href}
-      className="group relative text-lg text-muted-foreground
-        hover:text-neon transition-colors duration-300
-        hover:[text-shadow:_0_0_12px_rgba(34,211,238,0.8),_0_0_24px_rgba(34,211,238,0.4)]"
+      className={cn(
+        'group relative text-lg text-muted-foreground',
+        'hover:text-neon transition-colors duration-300',
+        'hover:text-shadow-[0_0_12px_rgba(34,211,238,0.8),_0_0_24px_rgba(34,211,238,0.4)]',
+        className,
+      )}
     >
       {children}
       <span

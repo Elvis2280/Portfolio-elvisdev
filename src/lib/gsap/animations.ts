@@ -256,21 +256,20 @@ export function createExperienceScrollAnimation(
 
   const ctx = gsap.context(() => {
     const containerRect = containerRef.getBoundingClientRect();
-    const helmetRect = helmetRef.getBoundingClientRect();
-    const helmetHalfW = helmetRect.width / 2;
-    const helmetHalfH = helmetRect.height / 2;
 
     const dotPositions = stepNodes.map((dot) => {
       if (!dot) return { x: 0, y: 0 };
       const rect = dot.getBoundingClientRect();
       return {
-        x: rect.left + rect.width / 2 - containerRect.left - helmetHalfW,
-        y: rect.top + rect.height / 2 - containerRect.top - helmetHalfH,
+        x: rect.left + rect.width / 2 - containerRect.left,
+        y: rect.top + rect.height / 2 - containerRect.top,
       };
     });
 
     gsap.set(helmetRef, {
-      x: dotPositions[0].x,
+      xPercent: -50,
+      yPercent: -50,
+      x: dotPositions[0].x - 12,
       y: dotPositions[0].y,
     });
 
@@ -315,7 +314,7 @@ export function createExperienceScrollAnimation(
       tl.to(
         helmetRef,
         {
-          x: dotPositions[i].x,
+          x: dotPositions[i].x - 12,
           y: dotPositions[i].y,
           duration: 1,
           ease: 'none',

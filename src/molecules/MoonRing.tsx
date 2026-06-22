@@ -84,7 +84,7 @@ export default function MoonRing({
             }}
           >
             <div
-              className={`w-5 h-5 md:w-8 md:h-8 flex items-center justify-center text-white ${itemSpinClass}`}
+              className={`w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 flex items-center justify-center text-white ${itemSpinClass}`}
               style={{ animationDuration: `${duration}s` }}
             >
               {child}

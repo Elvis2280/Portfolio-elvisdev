@@ -68,8 +68,7 @@ export default function ExperienceStepper({
     <div ref={containerRef} className="relative mt-16 px-4">
       <div
         ref={helmetRef}
-        className="absolute z-10 pointer-events-none"
-        style={{ width: 60, height: 60, top: 0, left: 0 }}
+        className="absolute z-10 pointer-events-none w-16 h-16 lg:w-20 lg:h-20 2xl:w-24 2xl:h-24 z-20"
       >
         <ConchoHelmet className="w-full h-full" antenaRef={antenaRef} />
       </div>

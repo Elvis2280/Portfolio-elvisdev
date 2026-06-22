@@ -193,6 +193,36 @@
   }
 }
 
+@utility animate-menu-enter {
+  animation: menu-enter 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@utility animate-menu-exit {
+  animation: menu-exit 0.35s cubic-bezier(0.5, 0, 0.8, 0.5) forwards;
+}
+
+@keyframes menu-enter {
+  0% {
+    transform: translateX(100%);
+    border-radius: 9999px 0 0 9999px;
+  }
+  100% {
+    transform: translateX(0);
+    border-radius: 0;
+  }
+}
+
+@keyframes menu-exit {
+  0% {
+    transform: translateX(0);
+    border-radius: 0;
+  }
+  100% {
+    transform: translateX(100%);
+    border-radius: 9999px 0 0 9999px;
+  }
+}
+
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;
