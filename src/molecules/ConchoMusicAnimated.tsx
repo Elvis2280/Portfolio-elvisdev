@@ -21,6 +21,7 @@ import { FaRandom } from 'react-icons/fa';
 import { FaRepeat } from 'react-icons/fa6';
 
 import Image from 'next/image';
+import SpeechBubble from '@/molecules/SpeechBubble';
 
 interface ConchoMusicAnimatedProps {
   className?: string;
@@ -135,6 +136,25 @@ export default function ConchoMusicAnimated({
 
   return (
     <div className={`relative ${className ?? ''}`}>
+      <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none w-full max-w-xs flex justify-center">
+        {playingData?.isPlaying ? (
+          <SpeechBubble
+            key={playingData.title}
+            messages={[
+              `Listening "${playingData.title}" with Elvis! Touch my iPod's screen to join us!`,
+            ]}
+            arrowPosition="left"
+          />
+        ) : (
+          <SpeechBubble
+            key="idle"
+            messages={[
+              'Waiting for Elvis to listen to music together. Hope he comes back soon!',
+            ]}
+            arrowPosition="left"
+          />
+        )}
+      </div>
       <ConchoMusic
         className="w-full h-full"
         notesRRef={notesRRef}
@@ -169,7 +189,13 @@ export default function ConchoMusicAnimated({
           }}
         >
           {playingData ? (
-            <IpodPlayingMusic playingData={playingData} />
+            <a
+              href={playingData.songUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <IpodPlayingMusic playingData={playingData} />
+            </a>
           ) : (
             <IpodNoPlayingMusic />
           )}
