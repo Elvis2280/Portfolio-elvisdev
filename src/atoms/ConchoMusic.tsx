@@ -19,6 +19,7 @@ const SvgConchoMusic = ({
   pantallaRef,
   parpadosRef,
   headRef,
+  children,
   ...props
 }: ConchoMusicProps) => (
   <svg
@@ -1081,6 +1082,7 @@ const SvgConchoMusic = ({
         <path id="Line 4" stroke="#000" d="M317.5 654v6" />
         <path id="Line 5" stroke="#000" d="M320 654v6" />
       </g>
+      {children}
     </g>
   </svg>
 );

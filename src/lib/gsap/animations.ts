@@ -631,7 +631,7 @@ export function createHeadSway(headElement: SVGGElement | null) {
 }
 
 export function createAlbumOrbit(
-  element: HTMLElement | null,
+  element: SVGGElement | null,
   pathSelector: string,
   onRepeat?: () => void,
 ) {

@@ -90,7 +90,7 @@ export default function AboutMeSection() {
       </div>
       <div className="flex justify-center w-full">
         <ConchoMusicAnimated
-          className="w-[350px] md:w-[500px] 2xl:w-[700px] 3xl:w-[900px] mt-10 xl:mt-2"
+          className="w-[350px] md:w-[500px] 2xl:w-[700px] 3xl:w-[900px] pt-16 xl:pt-8"
           playingData={playingSpotifyData}
         />
       </div>

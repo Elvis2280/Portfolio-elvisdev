@@ -38,7 +38,7 @@ export default function ProjectsSection() {
   };
   return (
     <section className="relative overflow-hidden bg-background 2xl:flex 2xl:gap-6">
-      <div className="xl:min-w-xl max-w-xl">
+      <div className="xl:min-w-xl max-w-2xl">
         {/* Content */}
         <div className="relative z-10 px-4 pt-4">
           <p className="text-caption text-muted-foreground/70 md:text-lg">

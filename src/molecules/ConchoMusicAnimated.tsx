@@ -31,6 +31,14 @@ interface ConchoMusicAnimatedProps {
 const SVG_WIDTH = 663;
 const SVG_HEIGHT = 715;
 
+const albumUrls = [
+  '/images/album_pictures/YHLQMDLGN.webp',
+  '/images/album_pictures/nadie-sabe_loque_vapasar.webp',
+  '/images/album_pictures/ultimo_tour.webp',
+  '/images/album_pictures/un_verano_sin_ti.webp',
+  '/images/album_pictures/x100pre.webp',
+];
+
 export default function ConchoMusicAnimated({
   className,
   playingData,
@@ -42,15 +50,18 @@ export default function ConchoMusicAnimated({
   const pantallaRef = useRef<SVGGElement>(null);
   const parpadosRef = useRef<SVGGElement>(null);
   const headRef = useRef<SVGGElement>(null);
-  const leftAlbumContainerRef = useRef<HTMLDivElement>(null);
-  const rightAlbumContainerRef = useRef<HTMLDivElement>(null);
+  const leftAlbumContainerRef = useRef<SVGGElement>(null);
+  const rightAlbumContainerRef = useRef<SVGGElement>(null);
   const leftOrbitRef = useRef<gsap.core.Animation | null>(null);
   const rightOrbitRef = useRef<gsap.core.Animation | null>(null);
   const headSwayRef = useRef<gsap.core.Tween | null>(null);
   const [pantallaBBox, setPantallaBBox] = useState<DOMRect | null>(null);
-  const [activeLeftAlbum, setActiveLeftAlbum] = useState<React.ReactNode>(null);
-  const [activeRightAlbum, setActiveRightAlbum] =
-    useState<React.ReactNode>(null);
+  const [activeLeftAlbumUrl, setActiveLeftAlbumUrl] = useState<string | null>(
+    null,
+  );
+  const [activeRightAlbumUrl, setActiveRightAlbumUrl] = useState<string | null>(
+    null,
+  );
 
   useEffect(() => {
     if (pantallaRef.current) {
@@ -82,21 +93,11 @@ export default function ConchoMusicAnimated({
       return;
     }
 
-    const albums = [
-      YHLQMDLGN,
-      nadie_sabe_loque_vapasar,
-      ultimo_tour,
-      un_verano_sin_ti,
-      x100pre,
-    ];
-
-    const pick = () => albums[Math.floor(Math.random() * albums.length)];
+    const pick = () => albumUrls[Math.floor(Math.random() * albumUrls.length)];
 
     queueMicrotask(() => {
-      const LeftAlbum = pick();
-      const RightAlbum = pick();
-      setActiveLeftAlbum(<LeftAlbum />);
-      setActiveRightAlbum(<RightAlbum />);
+      setActiveLeftAlbumUrl(null);
+      setActiveRightAlbumUrl(null);
     });
 
     headSwayRef.current = createHeadSway(headRef.current);
@@ -106,8 +107,7 @@ export default function ConchoMusicAnimated({
         leftAlbumContainerRef.current,
         '#STROKE_4ecd9116-ec81-4159-8967-4aa59d9251cc',
         () => {
-          const NextAlbum = pick();
-          setActiveLeftAlbum(<NextAlbum />);
+          setActiveLeftAlbumUrl(pick());
         },
       );
 
@@ -115,8 +115,7 @@ export default function ConchoMusicAnimated({
         rightAlbumContainerRef.current,
         '#audifonoR > path:first-of-type',
         () => {
-          const NextAlbum = pick();
-          setActiveRightAlbum(<NextAlbum />);
+          setActiveRightAlbumUrl(pick());
         },
       );
     });
@@ -129,14 +128,14 @@ export default function ConchoMusicAnimated({
       leftOrbitRef.current = null;
       rightOrbitRef.current = null;
       headSwayRef.current = null;
-      setActiveLeftAlbum(null);
-      setActiveRightAlbum(null);
+      setActiveLeftAlbumUrl(null);
+      setActiveRightAlbumUrl(null);
     };
   }, [playingData?.isPlaying]);
 
   return (
     <div className={`relative ${className ?? ''}`}>
-      <div className="absolute -top-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none w-full max-w-xs flex justify-center">
+      <div className="absolute -top-10 xl:top-0 2xl:top-1 left-1/2 -translate-x-1/2 z-20 pointer-events-none w-full max-w-xs flex justify-center">
         {playingData?.isPlaying ? (
           <SpeechBubble
             key={playingData.title}
@@ -164,19 +163,30 @@ export default function ConchoMusicAnimated({
         pantallaRef={pantallaRef}
         parpadosRef={parpadosRef}
         headRef={headRef}
-      />
-      <div
-        ref={leftAlbumContainerRef}
-        className="absolute w-16 h-16 z-10 pointer-events-none"
       >
-        {activeLeftAlbum}
-      </div>
-      <div
-        ref={rightAlbumContainerRef}
-        className="absolute w-16 h-16 z-10 pointer-events-none"
-      >
-        {activeRightAlbum}
-      </div>
+        <g ref={leftAlbumContainerRef}>
+          {activeLeftAlbumUrl && (
+            <image
+              href={activeLeftAlbumUrl}
+              width="48"
+              height="48"
+              x="-24"
+              y="-24"
+            />
+          )}
+        </g>
+        <g ref={rightAlbumContainerRef}>
+          {activeRightAlbumUrl && (
+            <image
+              href={activeRightAlbumUrl}
+              width="48"
+              height="48"
+              x="-24"
+              y="-24"
+            />
+          )}
+        </g>
+      </ConchoMusic>
       {pantallaBBox && (
         <div
           className="absolute border-2 border-background bg-background bg-center"
@@ -283,45 +293,3 @@ const IpodPlayingMusic = ({
     </div>
   );
 };
-
-const YHLQMDLGN = () => (
-  <div
-    className="w-8 h-8 lg:w-12 lg:h-12  bg-cover bg-center rounded-md"
-    style={{ backgroundImage: "url('/images/album_pictures/YHLQMDLGN.webp')" }}
-  />
-);
-
-const nadie_sabe_loque_vapasar = () => (
-  <div
-    className="w-8 h-8 lg:w-12 lg:h-12 bg-cover bg-center rounded-md"
-    style={{
-      backgroundImage:
-        "url('/images/album_pictures/nadie-sabe_loque_vapasar.webp')",
-    }}
-  />
-);
-
-const ultimo_tour = () => (
-  <div
-    className="w-8 h-8 lg:w-12 lg:h-12 bg-cover bg-center rounded-md"
-    style={{
-      backgroundImage: "url('/images/album_pictures/ultimo_tour.webp')",
-    }}
-  />
-);
-
-const un_verano_sin_ti = () => (
-  <div
-    className="w-8 h-8 lg:w-12 lg:h-12 bg-cover bg-center rounded-md"
-    style={{
-      backgroundImage: "url('/images/album_pictures/un_verano_sin_ti.webp')",
-    }}
-  />
-);
-
-const x100pre = () => (
-  <div
-    className="w-8 h-8 lg:w-12 lg:h-12 bg-cover bg-center rounded-md"
-    style={{ backgroundImage: "url('/images/album_pictures/x100pre.webp')" }}
-  />
-);
