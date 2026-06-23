@@ -1,22 +1,182 @@
 # Portfolio Website
 
-A personal portfolio built with Next.js, Tailwind CSS, and designed with atomic architecture principles.
+A personal portfolio built with Next.js, Tailwind CSS, Sanity CMS, and Spotify integration. Designed with atomic architecture principles and space-themed animations.
 
 ## Tech Stack
 
-| Category            | Technology                                     |
-| ------------------- | ---------------------------------------------- |
-| **Framework**       | Next.js 16.2.4 (App Router)                    |
-| **Language**        | TypeScript                                     |
-| **UI Library**      | React 19.2.4                                   |
-| **Styling**         | Tailwind CSS 4                                 |
-| **UI Components**   | shadcn 4.3.0, Radix UI 1.4.3                   |
-| **Icons**           | lucide-react                                   |
-| **Animations**      | tw-animate-css                                 |
-| **CSS Utilities**   | clsx, tailwind-merge, class-variance-authority |
-| **Linting**         | ESLint 9                                       |
-| **Package Manager** | pnpm                                           |
-| **CMS**             | (To be decided)                                |
+| Category             | Technology                                     |
+| -------------------- | ---------------------------------------------- |
+| **Framework**        | Next.js 16.2.4 (App Router)                    |
+| **Language**         | TypeScript                                     |
+| **UI Library**       | React 19.2.4                                   |
+| **Styling**          | Tailwind CSS 4 (CSS-first config)              |
+| **UI Components**    | shadcn 4.3.0, Radix UI 1.4.3                   |
+| **Icons**            | lucide-react, react-icons                      |
+| **Animations**       | GSAP 3.15.0 (ScrollTrigger, MotionPathPlugin)  |
+| **CSS Animations**   | tw-animate-css                                 |
+| **CMS**              | Sanity 5.31.1 (next-sanity 13.1.1)             |
+| **Forms**            | react-hook-form, yup, @hookform/resolvers      |
+| **CSS Utilities**    | clsx, tailwind-merge, class-variance-authority |
+| **Styling (Studio)** | styled-components                              |
+| **Linting**          | ESLint 9 (flat config)                         |
+| **Formatting**       | Prettier                                       |
+| **Package Manager**  | pnpm                                           |
+| **Git Hooks**        | Husky + lint-staged                            |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js 20+
+- pnpm
+
+### Installation
+
+```bash
+# Install dependencies
+pnpm install
+
+# Copy environment variables and fill them in
+cp .env.example .env.local
+
+# Start development server
+pnpm dev
+
+# Build for production
+pnpm build
+
+# Start production server
+pnpm start
+
+# Run linting
+pnpm lint
+```
+
+### Sanity Studio
+
+The Sanity Studio runs embedded at `/studio` during development:
+
+```bash
+pnpm dev
+# Open http://localhost:3000/studio
+```
+
+Alternatively, run it standalone for faster hot-reload (defaults to localhost:3333):
+
+```bash
+npx sanity dev
+```
+
+---
+
+## Sanity CMS
+
+Content is managed through [Sanity](https://www.sanity.io/), a headless CMS with a real-time collaborative Studio.
+
+### Configuration
+
+| Setting       | Value                              |
+| ------------- | ---------------------------------- |
+| **Project**   | `dr96ktqk`                         |
+| **Dataset**   | `production`                       |
+| **API Vers.** | `2026-06-23`                       |
+| **Studio**    | Embedded at `/studio` (App Router) |
+| **CDN**       | Enabled (`useCdn: true`)           |
+
+### Schema Types
+
+#### `project`
+
+| Field          | Type               | Validation                         |
+| -------------- | ------------------ | ---------------------------------- |
+| `title`        | `string`           | Required                           |
+| `subtitle`     | `string`           | —                                  |
+| `slug`         | `slug`             | Auto from title, required          |
+| `status`       | `string` (radio)   | Required: `unfinished`, `finished` |
+| `techStack`    | `array` of strings | Unique (tags layout)               |
+| `projectLink`  | `url`              | http/https scheme                  |
+| `previewImage` | `image` (hotspot)  | Required alt text                  |
+| `heroImage`    | `image` (hotspot)  | Required alt text                  |
+| `content`      | Portable Text      | Rich text (headings, lists, links) |
+
+### Studio Plugins
+
+- **Structure Tool** — Document list sidebar
+- **Vision** — GROQ query playground
+
+### Live Content API
+
+Real-time content updates are set up via `sanity/lib/live.ts` using `defineLive` from `next-sanity/live`. Render `<SanityLive />` in the root layout to enable automatic cache invalidation.
+
+---
+
+## Spotify Integration
+
+The portfolio displays the currently playing track from Spotify via an animated character widget in the About Me section.
+
+### API Endpoint
+
+**`GET /api/nowPlaying`** — Returns the currently playing track:
+
+```typescript
+{
+  isPlaying: boolean;
+  title: string; // Song name
+  artist: string; // Comma-joined artist names
+  albumImageUrl: string; // Album art URL
+  songUrl: string; // Spotify track URL
+}
+```
+
+### Authentication
+
+Uses OAuth 2.0 Authorization Code with Refresh Token flow:
+
+1. Base64-encodes `SPOTIFY_CLIENT_ID:SPOTIFY_CLIENT_SECRET`
+2. Exchanges the refresh token for an access token via `accounts.spotify.com/api/token`
+3. Calls `api.spotify.com/v1/me/player/currently-playing` with the access token
+
+### Required Scopes
+
+- `user-read-currently-playing`
+- `user-read-playback-state`
+
+### Required Environment Variables
+
+- `SPOTIFY_CLIENT_ID`
+- `SPOTIFY_CLIENT_SECRET`
+- `SPOTIFY_REFRESH_TOKEN`
+
+### Generating Tokens
+
+To generate a refresh token, use the [Spotify Authorization Code Flow](https://developer.spotify.com/documentation/web-api/tutorials/code-flow):
+
+1. Create an app at [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
+2. Add `http://localhost:3000` to Redirect URIs
+3. Visit the authorization URL with scopes `user-read-currently-playing user-read-playback-state`
+4. Exchange the returned code for an access + refresh token
+
+---
+
+## Environment Variables
+
+| Variable                         | Public | Description                        |
+| -------------------------------- | ------ | ---------------------------------- |
+| `NEXT_PUBLIC_SANITY_PROJECT_ID`  | Yes    | Sanity project ID                  |
+| `NEXT_PUBLIC_SANITY_DATASET`     | Yes    | Sanity dataset name                |
+| `NEXT_PUBLIC_SANITY_API_VERSION` | Yes    | Sanity API version date            |
+| `NEXT_PUBLIC_SITE_URL`           | Yes    | Base URL for metadata / Open Graph |
+| `SPOTIFY_CLIENT_ID`              | No     | Spotify OAuth client ID            |
+| `SPOTIFY_CLIENT_SECRET`          | No     | Spotify OAuth client secret        |
+| `SPOTIFY_REFRESH_TOKEN`          | No     | Spotify OAuth refresh token        |
+
+Copy `.env.example` and fill in the values:
+
+```bash
+cp .env.example .env.local
+```
 
 ---
 
@@ -25,8 +185,6 @@ A personal portfolio built with Next.js, Tailwind CSS, and designed with atomic 
 The theme is a **dark-only** palette defined with CSS custom properties in `app/globals.css`. All colors are mapped to shadcn/ui semantic tokens and exposed as Tailwind utility classes.
 
 ### Semantic Colors
-
-These map to Tailwind's `bg-*`, `text-*`, `border-*`, `ring-*` utilities directly:
 
 | Token                    | Hex       | Tailwind Utility            | Purpose                 |
 | ------------------------ | --------- | --------------------------- | ----------------------- |
@@ -47,8 +205,6 @@ These map to Tailwind's `bg-*`, `text-*`, `border-*`, `ring-*` utilities directl
 | `--destructive`          | `#EF4444` | `bg-destructive`            | Errors / danger         |
 
 ### Neon Scale (`--color-neon-*`)
-
-A custom neon/cyan color scale for gradients, opacity overlays, and decorative use:
 
 | Shade      | Hex       |
 | ---------- | --------- |
@@ -97,40 +253,97 @@ A custom neon/cyan color scale for gradients, opacity overlays, and decorative u
 
 ## Folder Structure (Atomic Design)
 
-This project follows **Atomic Design** methodology to maintain scalable and reusable component architecture.
-
 ```
 portfolio/
-├── app/                         # Next.js App Router (pages live here)
-│   ├── layout.tsx               # Root layout (wraps all pages)
-│   ├── page.tsx                 # Home page (/)
-│   └── globals.css             # Global styles + Tailwind v4 theme
+├── app/                         # Next.js App Router
+│   ├── layout.tsx               # Root layout (Header + Footer + Geist fonts)
+│   ├── page.tsx                 # Home page (single-page portfolio)
+│   ├── globals.css              # Global styles + Tailwind v4 theme
+│   ├── studio/
+│   │   └── [[...tool]]/
+│   │       └── page.tsx         # Sanity Studio (catch-all, force-static)
+│   └── api/
+│       └── nowPlaying/
+│           └── route.ts         # GET /api/nowPlaying (Spotify)
+│
+├── sanity/                      # Sanity CMS configuration
+│   ├── env.ts                   # Environment variable helpers
+│   ├── config.ts                # Sanity CLI config
+│   ├── structure.ts             # Studio structure builder
+│   ├── lib/
+│   │   ├── client.ts            # Sanity client
+│   │   ├── live.ts              # Live Content API (sanityFetch + SanityLive)
+│   │   └── image.ts             # Image URL builder
+│   └── schemaTypes/
+│       ├── index.ts             # Schema registry
+│       └── project.ts           # Project document type
 │
 ├── src/
 │   ├── atoms/                   # Smallest building blocks
-│   │   └── ui/                  # shadcn/ui components
-│   │       └── button.tsx
+│   │   ├── ui/                  # shadcn/ui components
+│   │   │   ├── button.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── pagination.tsx
+│   │   │   ├── spinner.tsx
+│   │   │   └── textarea.tsx
+│   │   ├── ConchoAstronaut.tsx  # SVG astronaut character
+│   │   ├── ConchoHelmet.tsx     # SVG helmet (experience stepper)
+│   │   ├── ConchoMusic.tsx      # SVG character with iPod/headphones
+│   │   ├── Estrella.tsx         # SVG star decoration
+│   │   ├── NavLink.tsx          # Navigation link atom
+│   │   ├── Observatorio.tsx     # SVG observatory decoration
+│   │   ├── SistemaUnified.tsx   # SVG solar system
+│   │   ├── StepConnector.tsx    # Experience stepper connector
+│   │   └── StepNode.tsx         # Experience stepper node
 │   │
-│   ├── molecules/               # Simple group of atoms (planned)
+│   ├── molecules/               # Simple group of atoms
+│   │   ├── ConchoMusicAnimated.tsx  # Animated iPod character + Spotify
+│   │   ├── ContactForm.tsx      # Email/message form
+│   │   ├── ExperienceStep.tsx   # Single experience step
+│   │   ├── ExperienceStepper.tsx# Full experience stepper
+│   │   ├── MobileMenu.tsx       # Mobile hamburger menu
+│   │   ├── MoonRing.tsx         # Orbiting tech stack ring
+│   │   ├── SistemaUnifiedAnimated.tsx # Animated solar system with UFO
+│   │   └── SpeechBubble.tsx     # Typewriter speech bubble
 │   │
 │   ├── organisms/               # Complex UI sections
-│   │   └── Header.tsx
+│   │   ├── Header.tsx           # Sticky header with nav
+│   │   ├── Footer.tsx           # Footer with GitHub link
+│   │   ├── HeroSection.tsx      # Full-screen hero
+│   │   ├── ExperienceSection.tsx# Experience timeline
+│   │   ├── ProjectsSection.tsx  # Projects showcase
+│   │   ├── AboutMeSection.tsx   # About + Spotify widget
+│   │   └── ContactSection.tsx   # Contact form section
 │   │
-│   ├── templates/               # Page layouts (planned)
+│   ├── lib/
+│   │   ├── utils.ts             # cn() helper
+│   │   ├── validations.ts       # yup contact schema
+│   │   └── gsap/
+│   │       ├── config.ts        # GSAP + ScrollTrigger + MotionPathPlugin
+│   │       └── animations.ts    # ~20 reusable GSAP presets
 │   │
-│   ├── lib/                     # Utilities & configs
-│   │   ├── utils.ts             # cn() helper (clsx + tailwind-merge)
-│   │   ├── cms/                 # CMS integration (planned)
-│   │   └── hooks/               # Custom React hooks (planned)
+│   ├── data/
+│   │   ├── experience.ts        # 3 work experiences
+│   │   ├── links.ts             # GitHub link
+│   │   └── speech.ts            # Intro speech lines
 │   │
-│   ├── types/                   # TypeScript global types (planned)
+│   ├── types/
+│   │   └── spotify.ts           # Spotify API type definitions
 │   │
-│   ├── data/                    # Static data before CMS (planned)
-│   │
-│   └── styles/                  # Additional CSS modules (planned)
+│   └── styles/
+│       ├── animations.css       # CSS keyframes + @utility classes
+│       └── typography.css       # Responsive typography @utility classes
 │
 ├── public/                      # Static assets
-│   └── illustrations/
+│   ├── favicon.webp
+│   ├── preview.webp             # OG image
+│   └── images/
+│       ├── bg/
+│       │   └── space-background.svg
+│       ├── album_pictures/      # Bad Bunny album covers
+│       └── decorations/
+│           ├── planets/
+│           └── objects/
 │
 ├── package.json
 ├── pnpm-lock.yaml
@@ -140,68 +353,18 @@ portfolio/
 ├── postcss.config.mjs           # Tailwind CSS v4 PostCSS plugin
 ├── eslint.config.mjs            # ESLint 9 flat config
 ├── components.json              # shadcn/ui configuration
+├── .env.example                 # Environment variable template
 ├── AGENTS.md                    # Agent behavior rules
-└── CLAUDE.md                    # Operating modes (Build / Review)
+└── CLAUDE.md                    # Operating modes
 ```
 
 ### Atomic Design Levels
 
-| Level         | Description                                | Examples                                 |
-| ------------- | ------------------------------------------ | ---------------------------------------- |
-| **Atoms**     | Basic building blocks with no dependencies | Button, Input, Badge, Typography         |
-| **Molecules** | Simple group of atoms working together     | SearchBar, Card, FormField, SocialLink   |
-| **Organisms** | Complex UI sections composed of molecules  | Header, Footer, ProjectCard, HeroSection |
-| **Templates** | Page layouts defining structure            | BaseLayout, BlogLayout                   |
-| **Pages**     | Next.js App Router pages                   | HomePage, AboutPage                      |
-
----
-
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18+
-- pnpm (recommended)
-
-### Installation
-
-```bash
-# Install dependencies
-pnpm install
-
-# Start development server
-pnpm dev
-
-# Build for production
-pnpm build
-
-# Start production server
-pnpm start
-
-# Run linting
-pnpm lint
-```
-
----
-
-## CMS Integration
-
-The CMS integration is planned but not yet implemented. The `lib/cms/` folder contains placeholder files for the future CMS client.
-
-### Recommended Options (Pending Decision)
-
-- **Sanity.io** - Great developer experience, real-time preview
-- **Contentful** - Enterprise-ready, strong CDN
-- **Strapi** - Self-hosted, open-source
-- **Prismic** - Visual editing, slices
-
-### When CMS is Decided
-
-1. Install CMS SDK: `pnpm add @sanity/client` (or other)
-2. Update `lib/cms/client.ts` with credentials
-3. Define content types in `lib/cms/types.ts`
-4. Create query functions in `lib/cms/queries.ts`
-5. Replace static data in `data/` with CMS queries
+| Level         | Description                                | Examples                                     |
+| ------------- | ------------------------------------------ | -------------------------------------------- |
+| **Atoms**     | Basic building blocks with no dependencies | Button, Input, SVG character parts           |
+| **Molecules** | Simple group of atoms working together     | ContactForm, SpeechBubble, MoonRing          |
+| **Organisms** | Complex UI sections composed of molecules  | Header, Footer, HeroSection, ProjectsSection |
 
 ---
 
@@ -211,31 +374,21 @@ The CMS integration is planned but not yet implemented. The `lib/cms/` folder co
 
 - Use PascalCase for component names
 - Match filename to component name
-- Use consistent prefixes (e.g., `ProjectCard`, `SocialLink`)
 
 ### Import Paths
 
 ```typescript
 // shadcn/ui components (atoms level)
 import { Button } from '@/atoms/ui/button';
-import { Input } from '@/atoms/ui/input';
 
 // Custom atoms
-import Icon from '@/atoms/Icon';
+import { ConchoAstronaut } from '@/atoms/ConchoAstronaut';
 
 // Molecules
-import Card from '@/molecules/Card';
-import SearchBar from '@/molecules/SearchBar';
+import { SpeechBubble } from '@/molecules/SpeechBubble';
 
 // Organisms
-import Header from '@/organisms/Header';
-import Footer from '@/organisms/Footer';
-
-// Templates
-import BaseLayout from '@/templates/BaseLayout';
-
-// Pages
-import HomePage from '@/pages/HomePage';
+import { Header } from '@/organisms/Header';
 ```
 
 ### CSS Classes
@@ -258,35 +411,28 @@ Tailwind v4 configures themes in CSS, not JavaScript. There is **no `tailwind.co
 @theme inline {
   --color-background: var(--background);
   --font-sans: var(--font-geist-sans);
-  /* ... */
 }
 ```
 
 ### Dark-Only Theme
 
-The site has **no light mode**. All colors are set directly in the `:root` selector in `globals.css`. There is no `.dark { }` class block — the dark palette is the default.
+The site has **no light mode**. All colors are set directly in the `:root` selector in `globals.css`. There is no `.dark { }` class block.
 
 ### shadcn/ui Integration
 
-shadcn/ui components reference CSS variables (e.g., `--primary`, `--border`) which are wired into Tailwind v4's `@theme inline` block. When adding new shadcn components via `pnpm dlx shadcn@latest add <component>`, they will pick up the palette automatically.
+shadcn/ui components reference CSS variables (e.g., `--primary`, `--border`) which are wired into Tailwind v4's `@theme inline` block.
 
 ### Fonts
 
-Geist Sans and Geist Mono are self-hosted via `next/font/google` in `app/layout.tsx`. They are exposed as CSS variables (`--font-geist-sans`, `--font-geist-mono`) and mapped to Tailwind's `font-sans` and `font-mono` utilities.
+Geist Sans and Geist Mono are self-hosted via `next/font/google` in `app/layout.tsx`. Exposed as CSS variables and mapped to Tailwind's `font-sans` and `font-mono`.
 
 ### Import Path Aliases
 
-Configured in `tsconfig.json`:
+Configured in `tsconfig.json` with `@/*` mapping to `./src/*`.
 
-```typescript
-import { Button } from '@/atoms/ui/button'; // shadcn components
-import Header from '@/organisms/Header'; // organisms
-import { cn } from '@/lib/utils'; // utilities
-```
+### GSAP Animations
 
-### Agent Rules
-
-Files `AGENTS.md` and `CLAUDE.md` define behavior rules for AI coding assistants working in this repo, including a code review mode triggered by phrases like "review my code."
+Complex animations use GSAP with ScrollTrigger and MotionPathPlugin. See `src/lib/gsap/animations.ts` for reusable presets. Simple animations stay in CSS (`src/styles/animations.css`).
 
 ---
 
