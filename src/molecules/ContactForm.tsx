@@ -7,6 +7,13 @@ import { Textarea } from '@/atoms/ui/textarea';
 import { Button } from '@/atoms/ui/button';
 import { Spinner } from '@/atoms/ui/spinner';
 import { contactSchema, type ContactFormData } from '@/lib/validations';
+import { toast } from 'sonner';
+import { errorEmailType, successEmailType } from '@/types/api';
+
+interface formType {
+  email: string;
+  message: string;
+}
 
 const ContactForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -15,6 +22,7 @@ const ContactForm = () => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = useForm<ContactFormData>({
     resolver: yupResolver(contactSchema),
@@ -23,10 +31,32 @@ const ContactForm = () => {
   const messageValue = useWatch({ control, name: 'message', defaultValue: '' });
   const remaining = 500 - (messageValue?.length ?? 0);
 
-  const onSubmit = async () => {
-    setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    setIsSubmitting(false);
+  const onSubmit = async (data: formType) => {
+    try {
+      setIsSubmitting(true);
+      toast.promise(
+        fetch('/api/sendEmail', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+        }).then(async (resp) => {
+          const body = (await resp.json()) as successEmailType | errorEmailType;
+          if ('error' in body)
+            throw new Error(body?.error || 'Request failed, try again later.');
+          return body;
+        }),
+        {
+          loading: 'Sending message!',
+          success: () => {
+            reset();
+            return 'Message sent successfully!';
+          },
+          error: (err) => `Failed to send message: ${err.message}`,
+        },
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (

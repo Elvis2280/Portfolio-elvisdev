@@ -47,8 +47,6 @@ export async function GET() {
 
   const song: SpotifyCurrentlyPlaying = await response.json();
 
-  console.log(song);
-
   if (song.item === null) {
     return NextResponse.json({ isPlaying: false });
   }

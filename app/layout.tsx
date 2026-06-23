@@ -3,6 +3,7 @@ import { Special_Gothic_Expanded_One, Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/organisms/Header';
 import Footer from '@/organisms/Footer';
+import { Toaster } from '@/atoms/ui/sonner';
 
 const specialGothic = Special_Gothic_Expanded_One({
   variable: '--font-special-gothic',
@@ -71,6 +72,7 @@ export default function RootLayout({
         <Header />
         {children}
         <Footer />
+        <Toaster />
       </body>
     </html>
   );
