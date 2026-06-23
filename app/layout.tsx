@@ -4,6 +4,7 @@ import './globals.css';
 import Header from '@/organisms/Header';
 import Footer from '@/organisms/Footer';
 import { Toaster } from '@/atoms/ui/sonner';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const specialGothic = Special_Gothic_Expanded_One({
   variable: '--font-special-gothic',
@@ -73,6 +74,7 @@ export default function RootLayout({
         {children}
         <Footer />
         <Toaster />
+        <SpeedInsights />
       </body>
     </html>
   );
