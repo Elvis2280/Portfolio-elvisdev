@@ -1,16 +1,17 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import { Special_Gothic_Expanded_One, Inter } from 'next/font/google';
 import './globals.css';
 import Header from '@/organisms/Header';
 import Footer from '@/organisms/Footer';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
+const specialGothic = Special_Gothic_Expanded_One({
+  variable: '--font-special-gothic',
+  weight: '400',
   subsets: ['latin'],
 });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
+const inter = Inter({
+  variable: '--font-inter',
   subsets: ['latin'],
 });
 
@@ -22,8 +23,22 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000',
   ),
   icons: {
-    icon: '/favicon.webp',
+    icon: [
+      {
+        url: '/favicon_io/favicon-16x16.png',
+        sizes: '16x16',
+        type: 'image/png',
+      },
+      {
+        url: '/favicon_io/favicon-32x32.png',
+        sizes: '32x32',
+        type: 'image/png',
+      },
+      { url: '/favicon_io/favicon.ico', sizes: '48x48' },
+    ],
+    apple: '/favicon_io/apple-touch-icon.png',
   },
+  manifest: '/favicon_io/site.webmanifest',
   openGraph: {
     title: 'Elvis Miranda | Full Stack Developer Portfolio',
     description:
@@ -50,7 +65,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${specialGothic.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Header />
