@@ -1,4 +1,4 @@
-import type { PortableTextBlock } from '@portabletext/react';
+import { PortableTextBlock } from 'next-sanity';
 
 export interface SanitySlug {
   _type: 'slug';
