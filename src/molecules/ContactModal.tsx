@@ -80,7 +80,7 @@ export default function ContactModal({
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogContent className="xl: min-w-xl">
+        <DialogContent className="xl:min-w-xl">
           <DialogHeader>
             <DialogTitle className="font-bold text-2xl ">
               Send me a message!
