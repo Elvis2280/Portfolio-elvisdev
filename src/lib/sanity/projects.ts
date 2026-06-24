@@ -30,7 +30,7 @@ export const getAmountOfProjectByOrder = async (
   order: 'asc' | 'desc',
 ) => {
   try {
-    const projects: SanityPreviewProjectsType[] = await sanityClient.fetch(
+    const projects: SanityPreviewProjectsType = await sanityClient.fetch(
       `*[_type == "project"] | order(_createdAt ${order}) [0...${amount}] {
         _id,
         title,
