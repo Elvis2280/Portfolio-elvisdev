@@ -7,12 +7,15 @@
  * https://github.com/sanity-io/next-sanity
  */
 
-import { NextStudio } from 'next-sanity/studio';
 import config from '../../../sanity.config';
 import { Metadata as MetadataNext } from 'next';
+import dynamic from 'next/dynamic';
 
-export const dynamic = 'force-static';
-
+// Dynamically import with SSR disabled
+const NextStudio = dynamic(
+  () => import('next-sanity/studio').then((mod) => mod.NextStudio),
+  { ssr: false },
+);
 export { viewport } from 'next-sanity/studio';
 
 export const metadata: MetadataNext = {

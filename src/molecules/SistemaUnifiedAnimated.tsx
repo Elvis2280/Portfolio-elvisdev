@@ -158,7 +158,7 @@ const SistemaUnifiedAnimated = forwardRef<
 
         {planetBBox && (
           <Link
-            href={slug ? `/${slug}` : '#'}
+            href={slug ? `/projects/${slug}` : '#'}
             className="absolute rounded-full overflow-hidden cursor-pointer z-10 group animate-planet-glow"
             style={{
               left: `${(planetBBox.x / SVG_WIDTH) * 100}%`,
