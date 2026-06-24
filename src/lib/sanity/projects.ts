@@ -4,9 +4,9 @@ import { SanityPreviewProjectsType } from '@/types/sanity';
 import { sanityClient } from './client';
 
 // get all the projects
-const getAllProjects = async () => {
+export const getAllProjects = async () => {
   try {
-    const projects: SanityPreviewProjectsType[] = await sanityClient.fetch(
+    const projects: SanityPreviewProjectsType = await sanityClient.fetch(
       `*[_type == "project"] {
       _id,
       title,

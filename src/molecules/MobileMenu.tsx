@@ -10,11 +10,7 @@ import {
   createMiraAnimation,
 } from '@/lib/gsap/animations';
 
-interface MobileMenuProps {
-  onNavigate: () => void;
-}
-
-const MobileMenu = ({ onNavigate }: MobileMenuProps) => {
+const MobileMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [exitAnimating, setExitAnimating] = useState(false);
   const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -40,11 +36,6 @@ const MobileMenu = ({ onNavigate }: MobileMenuProps) => {
       close();
     }
   }, [isOpen, close]);
-
-  const handleScrollToProjects = useCallback(() => {
-    onNavigate();
-    close();
-  }, [onNavigate, close]);
 
   useEffect(() => {
     if (isOpen) {
@@ -123,11 +114,7 @@ const MobileMenu = ({ onNavigate }: MobileMenuProps) => {
               >
                 Home
               </NavLink>
-              <NavLink
-                href="/"
-                onClick={handleScrollToProjects}
-                className="text-3xl w-full text-center"
-              >
+              <NavLink href="/projects" className="text-3xl w-full text-center">
                 Projects
               </NavLink>
               <NavLink
