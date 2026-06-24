@@ -82,7 +82,9 @@ export default function ContactModal({
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Send me a message!</DialogTitle>
+            <DialogTitle className="font-bold text-2xl ">
+              Send me a message!
+            </DialogTitle>
             <DialogDescription>
               if you&apos;re interested in working together, or bringing an idea
               to life, I&apos;d love to hear from you. Let&apos;s build

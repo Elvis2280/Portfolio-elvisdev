@@ -1,19 +1,19 @@
 import type { Metadata } from 'next';
-import { Special_Gothic_Expanded_One, Inter } from 'next/font/google';
+import { Space_Grotesk, DM_Sans } from 'next/font/google';
 import './globals.css';
 import Header from '@/organisms/Header';
 import Footer from '@/organisms/Footer';
 import { Toaster } from '@/atoms/ui/sonner';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 
-const specialGothic = Special_Gothic_Expanded_One({
-  variable: '--font-special-gothic',
-  weight: '400',
+const spaceGrotesk = Space_Grotesk({
+  variable: '--font-space-grotesk',
   subsets: ['latin'],
+  weight: ['400', '500', '700'],
 });
 
-const inter = Inter({
-  variable: '--font-inter',
+const dmSans = DM_Sans({
+  variable: '--font-dm-sans',
   subsets: ['latin'],
 });
 
@@ -67,7 +67,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${specialGothic.variable} ${inter.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${dmSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Header />

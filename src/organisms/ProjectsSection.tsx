@@ -58,7 +58,7 @@ export default function ProjectsSection({
 
           <h2 id="project-section" className="mt-6">
             <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
-              <span className="text-section bg-gradient-to-r from-white to-neon bg-clip-text text-transparent md:text-5xl xl:text-5xl 2xl:text-7xl">
+              <span className="font-bold text-section bg-gradient-to-r from-white to-neon bg-clip-text text-transparent md:text-5xl xl:text-5xl 2xl:text-7xl">
                 Featured Projects
               </span>
             </span>

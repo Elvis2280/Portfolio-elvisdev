@@ -1,7 +1,7 @@
 @utility text-hero {
   font-family: var(--font-heading);
   font-size: 2.25rem; /* Mobile: 36px */
-  font-weight: 400;
+  font-weight: 700;
 
   @media (min-width: 768px) {
     font-size: 3rem; /* Tablet: 48px */
@@ -49,7 +49,7 @@
 @utility text-subtitle {
   font-family: var(--font-heading);
   font-size: 1.25rem; /* Mobile: 20px */
-  font-weight: 400;
+  font-weight: 500;
 
   @media (min-width: 768px) {
     font-size: 1.375rem; /* Tablet: 22px */
@@ -84,7 +84,7 @@
 @utility text-step-title {
   font-family: var(--font-heading);
   font-size: 1.125rem; /* Mobile/Tablet: 18px */
-  font-weight: 400;
+  font-weight: 500;
   color: var(--color-foreground);
 
   @media (min-width: 1024px) {

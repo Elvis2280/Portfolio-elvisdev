@@ -53,11 +53,11 @@ export default function HeroSection() {
         </p>
 
         <h1 className="font-heading mt-2">
-          <span className="block text-5xl md:text-6xl lg:text-6xl xl:text-7xl 2xl:text-8xl text-white">
+          <span className="font-bold block text-5xl md:text-6xl lg:text-6xl xl:text-8xl 2xl:text-9xl text-white">
             Fullstack
           </span>
           <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
-            <span className="text-5xl md:text-6xl lg:text-6xl xl:text-7xl 2xl:text-8xl bg-gradient-to-br from-neon via-neon-300 to-purple bg-clip-text text-transparent">
+            <span className="font-bold text-5xl md:text-6xl lg:text-6xl xl:text-8xl 2xl:text-9xl bg-gradient-to-br from-neon via-neon-300 to-purple bg-clip-text text-transparent">
               Developer
             </span>
           </span>

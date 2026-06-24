@@ -7,7 +7,7 @@ export default async function ProjectsPage() {
   return (
     <main className="min-h-screen p-4 md:p-8 lg:p-16">
       <header className="mb-12">
-        <h1 className="text-section bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
+        <h1 className="font-bold text-section bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
           All Projects
         </h1>
         <p className="text-body text-muted-foreground/80 mt-4 max-w-2xl">

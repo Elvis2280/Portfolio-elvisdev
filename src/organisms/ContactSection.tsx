@@ -10,7 +10,7 @@ export default function ContactSection() {
 
         <h2 className="mt-6">
           <span className="block drop-shadow-[0_0_12px_rgba(34,211,238,0.5)]">
-            <span className="text-section md:text-5xl xl:text-5xl 2xl:text-7xl bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
+            <span className="font-bold text-section md:text-5xl xl:text-5xl 2xl:text-7xl bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
               Before you go
             </span>
           </span>
