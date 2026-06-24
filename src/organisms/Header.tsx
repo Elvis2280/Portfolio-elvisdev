@@ -14,9 +14,11 @@ const Header = () => {
         <div className="absolute -bottom-px left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon/40 to-transparent" />
         <nav className="flex justify-between items-center">
           <div className="flex gap-3 items-center">
-            <span className="relative font-bold text-2xl text-white/90 animate-header-blink lg:text-3xl">
-              ElvisDev
-            </span>
+            <NavLink href="/">
+              <span className="relative font-bold text-2xl text-white/90 animate-header-blink lg:text-3xl">
+                ElvisDev
+              </span>
+            </NavLink>
           </div>
           <div className="gap-12 hidden md:flex">
             <NavLink className="text-xl lg:text-xl" href="/">
@@ -33,7 +35,7 @@ const Header = () => {
               Contact
             </NavLink>
           </div>
-          <MobileMenu />
+          <MobileMenu onOpen={() => setIsOpen(true)} />
           <div className="hidden md:block"></div>
         </nav>
       </header>

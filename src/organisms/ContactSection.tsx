@@ -16,7 +16,7 @@ export default function ContactSection() {
           </span>
         </h2>
 
-        <p className="mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-4xl md:text-lg">
+        <p className="mt-4 xl:mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-4xl md:text-lg">
           if you&apos;re interested in working{' '}
           <span className="text-neon [text-shadow:_0_0_8px_rgba(34,211,238,0.5)]">
             together

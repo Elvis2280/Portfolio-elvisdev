@@ -52,7 +52,7 @@ export default function ExperienceSection() {
           </span>
         </h2>
 
-        <p className="mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-2xl md:text-lg xl:text-lg">
+        <p className="mt-4 xl:mt-8 text-body text-muted-foreground/80 leading-relaxed max-w-2xl md:text-lg xl:text-lg">
           Over the past half-decade, I&apos;ve been deeply immersed in building
           scalable digital products across the full stack. Below are my{' '}
           <span className="text-neon [text-shadow:_0_0_8px_rgba(34,211,238,0.5)]">

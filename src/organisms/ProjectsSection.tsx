@@ -65,7 +65,7 @@ export default function ProjectsSection({
           </h2>
         </div>
 
-        <div className="px-4 mt-8 mx-auto">
+        <div className="px-4 mt-4 xl:mt-8 mx-auto">
           <div className="w-full mb-8 md:mb-4">
             <p className="text-body text-muted-foreground/80 leading-relaxed md:text-lg xl:text-lg">
               I believe the best applications are built with a{' '}

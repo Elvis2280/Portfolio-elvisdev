@@ -10,7 +10,11 @@ import {
   createMiraAnimation,
 } from '@/lib/gsap/animations';
 
-const MobileMenu = () => {
+interface MobileMenuProps {
+  onOpen: () => void;
+}
+
+const MobileMenu = ({ onOpen }: MobileMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [exitAnimating, setExitAnimating] = useState(false);
   const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -114,12 +118,19 @@ const MobileMenu = () => {
               >
                 Home
               </NavLink>
-              <NavLink href="/projects" className="text-3xl w-full text-center">
+              <NavLink
+                onClick={close}
+                href="/projects"
+                className="text-3xl w-full text-center"
+              >
                 Projects
               </NavLink>
               <NavLink
-                href="/"
-                onClick={close}
+                href="#"
+                onClick={() => {
+                  close();
+                  onOpen();
+                }}
                 className="text-3xl w-full text-center"
               >
                 Contact

@@ -35,7 +35,7 @@ export default function AboutMeSection() {
           </h2>
         </div>
 
-        <div className="relative z-10 px-4 flex items-start gap-8 mt-12 flex-col">
+        <div className="relative z-10 px-4 flex items-start gap-8 mt-4 xl:mt-8 flex-col">
           <div className="flex-1 max-w-2xl xl:max-w-4xl">
             <p className="text-body text-muted-foreground/80 leading-relaxed md:text-lg xl:text-lg">
               Concho handled the intro, so let&apos;s look under the hood. I am

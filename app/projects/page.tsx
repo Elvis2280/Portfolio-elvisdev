@@ -10,7 +10,7 @@ export default async function ProjectsPage() {
         <h1 className="font-bold text-section bg-gradient-to-r from-white to-neon bg-clip-text text-transparent">
           All Projects
         </h1>
-        <p className="text-body text-muted-foreground/80 mt-4 max-w-2xl">
+        <p className="text-body text-muted-foreground/80 mt-4 xl:mt-8 max-w-2xl">
           A complete collection of my builds, blending robust architecture with
           intuitive interface design.
         </p>
