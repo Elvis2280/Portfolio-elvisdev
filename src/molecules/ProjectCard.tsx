@@ -14,14 +14,14 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     project;
 
   return (
-    <Card className="h-[400px] p-0 gap-0 flex flex-col">
+    <Card className="h-[400px] p-0 gap-0 flex flex-col group">
       <div className="relative flex-[7] overflow-hidden">
         {previewImageUrl ? (
           <Image
             src={previewImageUrl}
             alt={previewImageAlt || title}
             fill
-            className="object-cover"
+            className="object-cover group-hover:scale-110 ease-in-out duration-200"
           />
         ) : (
           <div className="absolute inset-0 bg-gray-800" />
@@ -58,7 +58,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         <Button className="w-full" asChild>
-          <Link href={`/${slug.current}`}>View project</Link>
+          <Link href={`/projects/${slug.current}`}>View project</Link>
         </Button>
       </div>
     </Card>

@@ -1,6 +1,6 @@
-import { githubLink } from '@/data/links';
+import { githubLink, linkdlnLink } from '@/data/links';
 import Link from 'next/link';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -24,7 +24,11 @@ export default function Footer() {
           <Link href={githubLink} target="_blank">
             <FaGithub className="text-white" size={28} />
           </Link>
-          <div className="w-8 h-8 rounded-full bg-white/10 border border-border/50" />
+          <div className="w-8 h-8 rounded-full bg-white/10 border border-border/50">
+            <Link href={linkdlnLink} target="_blank">
+              <FaLinkedin className="text-white" size={28} />
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

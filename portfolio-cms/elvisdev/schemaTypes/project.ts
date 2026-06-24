@@ -1,5 +1,5 @@
-import { defineType, defineField } from 'sanity';
-import { DocumentTextIcon } from '@sanity/icons';
+import {defineType, defineField} from 'sanity'
+import {DocumentTextIcon} from '@sanity/icons'
 
 export const project = defineType({
   name: 'project',
@@ -22,7 +22,7 @@ export const project = defineType({
       name: 'slug',
       title: 'Slug',
       type: 'slug',
-      options: { source: 'title' },
+      options: {source: 'title'},
       validation: (rule) => rule.required(),
     }),
     defineField({
@@ -31,8 +31,8 @@ export const project = defineType({
       type: 'string',
       options: {
         list: [
-          { title: 'Unfinished', value: 'unfinished' },
-          { title: 'Finished', value: 'finished' },
+          {title: 'Unfinished', value: 'unfinished'},
+          {title: 'Finished', value: 'finished'},
         ],
         layout: 'radio',
       },
@@ -42,8 +42,8 @@ export const project = defineType({
       name: 'techStack',
       title: 'Tech Stack',
       type: 'array',
-      of: [{ type: 'string' }],
-      options: { layout: 'tags' },
+      of: [{type: 'string'}],
+      options: {layout: 'tags'},
       validation: (rule) => rule.unique(),
     }),
     defineField({
@@ -59,7 +59,7 @@ export const project = defineType({
       name: 'previewImage',
       title: 'Preview Image',
       type: 'image',
-      options: { hotspot: true },
+      options: {hotspot: true},
       fields: [
         defineField({
           name: 'alt',
@@ -73,7 +73,7 @@ export const project = defineType({
       name: 'heroImage',
       title: 'Hero Image',
       type: 'image',
-      options: { hotspot: true },
+      options: {hotspot: true},
       fields: [
         defineField({
           name: 'alt',
@@ -87,7 +87,7 @@ export const project = defineType({
       name: 'content',
       title: 'Content',
       type: 'array',
-      of: [{ type: 'block' }],
+      of: [{type: 'block'}],
     }),
   ],
-});
+})

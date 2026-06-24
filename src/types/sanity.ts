@@ -28,10 +28,6 @@ export interface SanityImage {
 
 export interface SanityProject {
   _id: string;
-  _type: 'project';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
   title: string;
   subtitle?: string;
   slug: SanitySlug;
@@ -39,7 +35,11 @@ export interface SanityProject {
   techStack?: string[];
   projectLink?: string;
   previewImage?: SanityImage;
+  previewImageUrl?: string;
+  previewImageAlt: string;
   heroImage?: SanityImage;
+  heroImageUrl?: string;
+  heroImageAlt: string;
   content?: PortableTextBlock[];
 }
 
