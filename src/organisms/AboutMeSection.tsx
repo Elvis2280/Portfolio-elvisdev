@@ -17,9 +17,6 @@ export default function AboutMeSection() {
     };
     fetchSpotifyNowListening();
   }, []);
-
-  console.log(playingSpotifyData);
-
   return (
     <section className="relative overflow-hidden bg-background pb-8 2xl:flex 2xl:gap-6 ">
       {/* Content */}
