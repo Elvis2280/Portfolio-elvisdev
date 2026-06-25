@@ -21,6 +21,7 @@ import { gsap } from '@/lib/gsap/config';
 
 export interface SistemaUnifiedAnimatedHandle {
   playHoverAnimation: () => void;
+  getContainer: () => HTMLDivElement | null;
 }
 
 interface SistemaUnifiedAnimatedProps {
@@ -110,8 +111,11 @@ const SistemaUnifiedAnimated = forwardRef<
       );
     }, []);
 
+    const rootRef = useRef<HTMLDivElement>(null);
+
     useImperativeHandle(ref, () => ({
       playHoverAnimation: handlePlanetHover,
+      getContainer: () => rootRef.current,
     }));
 
     const centerX = planetBBox ? planetBBox.x + planetBBox.width / 2 : 0;
@@ -137,7 +141,7 @@ const SistemaUnifiedAnimated = forwardRef<
     };
 
     return (
-      <div className={`relative ${className ?? ''}`}>
+      <div ref={rootRef} className={`relative ${className ?? ''}`}>
         <SistemaUnified
           className="w-full h-full overflow-visible"
           starsRef={starsRef}

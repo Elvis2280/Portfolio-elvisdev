@@ -1,5 +1,8 @@
 'use client';
-import SistemaUnifiedAnimated from '@/molecules/SistemaUnifiedAnimated';
+import { useLayoutEffect, useRef, useState } from 'react';
+import SistemaUnifiedAnimated, {
+  type SistemaUnifiedAnimatedHandle,
+} from '@/molecules/SistemaUnifiedAnimated';
 import {
   Pagination,
   PaginationItem,
@@ -7,8 +10,9 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/atoms/ui/pagination';
-import { useState } from 'react';
 import { SanityPreviewProjectsType } from '@/types/sanity';
+import { createProjectTransitionAnimation } from '@/lib/gsap/animations';
+import { gsap } from '@/lib/gsap/config';
 
 interface ProjectsSectionProps {
   listOfProjects: SanityPreviewProjectsType;
@@ -24,11 +28,51 @@ export default function ProjectsSection({
   const leftTechStack = currentProject.techStack.slice(0, middleTechIndex);
   const rightTechStack = currentProject.techStack.slice(middleTechIndex);
 
+  const sistemaRef = useRef<SistemaUnifiedAnimatedHandle>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const isAnimatingRef = useRef(false);
+  const isFirstRender = useRef(true);
+
   const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
+    if (newPage >= 1 && newPage <= totalPages && !isAnimatingRef.current) {
+      isAnimatingRef.current = true;
+
+      const planetContainer = sistemaRef.current?.getContainer() ?? null;
+
+      createProjectTransitionAnimation(
+        planetContainer,
+        titleRef.current,
+        'exit',
+        () => {
+          gsap.set(planetContainer, { opacity: 0, y: 30, scale: 0.8 });
+          gsap.set(titleRef.current, { opacity: 0, y: 30 });
+          setCurrentPage(newPage);
+        },
+      );
     }
   };
+
+  useLayoutEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    const planetContainer = sistemaRef.current?.getContainer() ?? null;
+
+    const enterTl = createProjectTransitionAnimation(
+      planetContainer,
+      titleRef.current,
+      'enter',
+      () => {
+        isAnimatingRef.current = false;
+      },
+    );
+
+    return () => {
+      enterTl?.kill();
+    };
+  }, [currentPage]);
 
   const buildPagesLinks = () => {
     const pages = [];
@@ -94,6 +138,7 @@ export default function ProjectsSection({
       <div className="grow grid grid-rows-[1fr_auto_100px] pb-8">
         <div className="relative overflow-visible flex justify-center items-center">
           <SistemaUnifiedAnimated
+            ref={sistemaRef}
             className="w-full aspect-[968/824] xl:max-w-3xl 2xl:max-w-4xl overflow-visible"
             projectTitle={currentProject?.title}
             leftTechStack={leftTechStack}
@@ -104,7 +149,10 @@ export default function ProjectsSection({
           />
         </div>
 
-        <h3 className="text-center text-step-title text-foreground mt-4 px-4 relative z-10">
+        <h3
+          ref={titleRef}
+          className="text-center text-step-title text-foreground mt-4 px-4 relative z-10"
+        >
           {currentProject?.title || 'Select a project'}
         </h3>
 

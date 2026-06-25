@@ -39,8 +39,8 @@ export default function HeroSection() {
 
       {/* Sun at top right - 50% visible */}
       <div
-        className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 aspect-square pointer-events-none z-[5] w-[300px] h-[300px] md:w-[500px] md:h-[500px] xl:w-[550px] xl:h-[550px] 2xl:w-[800px] 2xl:h-[800px] rounded-full overflow-hidden"
-        style={{ WebkitMaskImage: '-webkit-radial-gradient(white, black)' }}
+        className="absolute top-0 right-0 translate-x-1/2 -translate-y-1/2 aspect-square pointer-events-none z-[5] w-[300px] h-[300px] md:w-[500px] md:h-[500px] xl:w-[550px] xl:h-[550px] 2xl:w-[800px] 2xl:h-[800px]"
+        style={{ clipPath: 'circle(50%)' }}
       >
         <Image
           src="/images/decorations/planets/sun.svg"

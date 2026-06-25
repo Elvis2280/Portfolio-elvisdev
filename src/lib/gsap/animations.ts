@@ -692,3 +692,48 @@ export function createAlbumOrbit(
 
   return tl;
 }
+
+export function createProjectTransitionAnimation(
+  planetEl: HTMLElement | null,
+  titleEl: HTMLElement | null,
+  direction: 'enter' | 'exit',
+  onComplete?: () => void,
+) {
+  if (!planetEl || !titleEl) return null;
+
+  const tl = gsap.timeline({ onComplete });
+
+  if (direction === 'exit') {
+    tl.to(planetEl, {
+      y: 30,
+      opacity: 0,
+      scale: 0.8,
+      duration: 0.5,
+      ease: 'power2.inOut',
+    });
+    tl.to(
+      titleEl,
+      {
+        y: 30,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.inOut',
+      },
+      '<',
+    );
+  } else {
+    tl.fromTo(
+      planetEl,
+      { y: 30, opacity: 0, scale: 0.8 },
+      { y: 0, opacity: 1, scale: 1, duration: 0.5, ease: 'power2.inOut' },
+    );
+    tl.fromTo(
+      titleEl,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, ease: 'power2.inOut' },
+      '<',
+    );
+  }
+
+  return tl;
+}
