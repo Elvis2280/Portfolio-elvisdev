@@ -238,6 +238,22 @@
   }
 }
 
+@utility animate-content-fade-bottom {
+  mask-image: linear-gradient(to bottom, black 0%, black 75%, transparent 100%);
+  mask-size: 100% 100%;
+  mask-repeat: no-repeat;
+  mask-mode: alpha;
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 75%,
+    transparent 100%
+  );
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-mode: alpha;
+}
+
 .scrollbar-none {
   -ms-overflow-style: none;
   scrollbar-width: none;

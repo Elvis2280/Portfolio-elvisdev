@@ -32,6 +32,61 @@ export async function generateMetadata({
   };
 }
 
+const portableComponents = {
+  block: {
+    h1: ({ children }: { children?: React.ReactNode }) => (
+      <h1 className="text-section text-foreground mt-8 mb-4">{children}</h1>
+    ),
+    h2: ({ children }: { children?: React.ReactNode }) => (
+      <h2 className="text-subtitle text-foreground mt-6 mb-3">{children}</h2>
+    ),
+    h3: ({ children }: { children?: React.ReactNode }) => (
+      <h3 className="text-step-title text-foreground mt-5 mb-2">{children}</h3>
+    ),
+    normal: ({ children }: { children?: React.ReactNode }) => (
+      <p className="text-body text-muted-foreground mb-4 leading-relaxed">
+        {children}
+      </p>
+    ),
+    blockquote: ({ children }: { children?: React.ReactNode }) => (
+      <blockquote className="border-l-2 border-neon pl-4 italic text-muted-foreground my-6">
+        {children}
+      </blockquote>
+    ),
+    code: ({ children }: { children?: React.ReactNode }) => (
+      <code className="rounded bg-secondary px-1.5 py-0.5 text-sm text-neon">
+        {children}
+      </code>
+    ),
+  },
+  marks: {
+    link: ({
+      children,
+      value,
+    }: {
+      children?: React.ReactNode;
+      value?: { href?: string };
+    }) => (
+      <a
+        href={value?.href}
+        className="text-neon underline underline-offset-2 hover:text-neon-300 transition-colors"
+        target={value?.href?.startsWith('http') ? '_blank' : undefined}
+        rel={
+          value?.href?.startsWith('http') ? 'noopener noreferrer' : undefined
+        }
+      >
+        {children}
+      </a>
+    ),
+    strong: ({ children }: { children?: React.ReactNode }) => (
+      <strong className="font-semibold">{children}</strong>
+    ),
+  },
+  types: {
+    image: PortableImage,
+  },
+};
+
 export default async function ProjectPage({
   params,
 }: {
@@ -70,74 +125,27 @@ export default async function ProjectPage({
         )}
         <div className="w-full h-px bg-border my-2 " />
 
-        {project.content && (
-          <PortableText
-            value={project.content}
-            components={{
-              block: {
-                h1: ({ children }: { children?: React.ReactNode }) => (
-                  <h1 className="text-section text-foreground mt-8 mb-4">
-                    {children}
-                  </h1>
-                ),
-                h2: ({ children }: { children?: React.ReactNode }) => (
-                  <h2 className="text-subtitle text-foreground mt-6 mb-3">
-                    {children}
-                  </h2>
-                ),
-                h3: ({ children }: { children?: React.ReactNode }) => (
-                  <h3 className="text-step-title text-foreground mt-5 mb-2">
-                    {children}
-                  </h3>
-                ),
-                normal: ({ children }: { children?: React.ReactNode }) => (
-                  <p className="text-body text-muted-foreground mb-4 leading-relaxed">
-                    {children}
-                  </p>
-                ),
-                blockquote: ({ children }: { children?: React.ReactNode }) => (
-                  <blockquote className="border-l-2 border-neon pl-4 italic text-muted-foreground my-6">
-                    {children}
-                  </blockquote>
-                ),
-                code: ({ children }: { children?: React.ReactNode }) => (
-                  <code className="rounded bg-secondary px-1.5 py-0.5 text-sm text-neon">
-                    {children}
-                  </code>
-                ),
-              },
-              marks: {
-                link: ({
-                  children,
-                  value,
-                }: {
-                  children?: React.ReactNode;
-                  value?: { href?: string };
-                }) => (
-                  <a
-                    href={value?.href}
-                    className="text-neon underline underline-offset-2 hover:text-neon-300 transition-colors"
-                    target={
-                      value?.href?.startsWith('http') ? '_blank' : undefined
-                    }
-                    rel={
-                      value?.href?.startsWith('http')
-                        ? 'noopener noreferrer'
-                        : undefined
-                    }
-                  >
-                    {children}
-                  </a>
-                ),
-                strong: ({ children }: { children?: React.ReactNode }) => (
-                  <strong className="font-semibold">{children}</strong>
-                ),
-              },
-              types: {
-                image: PortableImage,
-              },
-            }}
-          />
+        {project.status === 'unfinished' ? (
+          <>
+            {project.content && (
+              <div className="animate-content-fade-bottom pb-32">
+                <PortableText
+                  value={project.content}
+                  components={portableComponents}
+                />
+              </div>
+            )}
+            <p className="text-white/90 font-bold text-step-title text-center my-12 animate-header-blink">
+              Article unfinished, comeback later!
+            </p>
+          </>
+        ) : (
+          project.content && (
+            <PortableText
+              value={project.content}
+              components={portableComponents}
+            />
+          )
         )}
       </section>
     </main>
