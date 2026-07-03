@@ -17,7 +17,17 @@ export const getProject = async (slug: string) => {
         "previewImageAlt": previewImage.alt,
         "heroImageUrl": heroImage.asset->url,
         "heroImageAlt": heroImage.alt,
-        content
+        content[]{
+          ...,
+          _type == "image" => {
+            _type,
+            alt,
+            caption,
+            hotspot,
+            crop,
+            asset->{_ref, url, metadata{dimensions, lqip, palette}}
+          }
+        }
       }`,
       { slug },
     );

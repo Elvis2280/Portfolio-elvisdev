@@ -5,6 +5,20 @@ export interface SanitySlug {
   current: string;
 }
 
+export interface SanityHotspot {
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+}
+
+export interface SanityCrop {
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+}
+
 export interface SanityImage {
   _type: 'image';
   asset: {
@@ -12,17 +26,26 @@ export interface SanityImage {
     _type: 'reference';
   };
   alt?: string;
-  hotspot?: {
-    x: number;
-    y: number;
-    height: number;
-    width: number;
-  };
-  crop?: {
-    top: number;
-    bottom: number;
-    left: number;
-    right: number;
+  hotspot?: SanityHotspot;
+  crop?: SanityCrop;
+}
+
+export interface PortableTextImage {
+  _type: 'image';
+  alt?: string;
+  caption?: string;
+  hotspot?: SanityHotspot;
+  crop?: SanityCrop;
+  asset: {
+    _ref: string;
+    url: string;
+    metadata?: {
+      dimensions?: {
+        width: number;
+        height: number;
+      };
+      lqip?: string;
+    };
   };
 }
 
@@ -40,7 +63,7 @@ export interface SanityProject {
   heroImage?: SanityImage;
   heroImageUrl?: string;
   heroImageAlt: string;
-  content?: PortableTextBlock[];
+  content?: (PortableTextBlock | PortableTextImage)[];
 }
 
 export interface previewSanityProject {
