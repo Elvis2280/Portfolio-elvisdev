@@ -70,7 +70,7 @@ export default function ConchoMusicAnimated({
   }, []);
 
   useEffect(() => {
-    if (!playingData?.isPlaying) {
+    if (!playingData?.title) {
       const paths = parpadosRef.current?.querySelectorAll('path');
       if (paths) {
         gsap.set(paths, {
@@ -115,7 +115,7 @@ export default function ConchoMusicAnimated({
   }, [playingData?.isPlaying]);
 
   useEffect(() => {
-    if (!playingData?.isPlaying) {
+    if (!playingData?.title) {
       leftOrbitRef.current?.kill();
       rightOrbitRef.current?.kill();
       headSwayRef.current?.kill();
@@ -166,25 +166,49 @@ export default function ConchoMusicAnimated({
     };
   }, [playingData?.isPlaying]);
 
+  const handlerReturnSpeechBubble = (
+    isPlaying: boolean,
+    title: string | null,
+  ) => {
+    if (isPlaying && title) {
+      return (
+        <SpeechBubble
+          key={title}
+          messages={[
+            `Listening "${title}" with Elvis! Touch my iPod's screen to join us!`,
+          ]}
+          arrowPosition="left"
+        />
+      );
+    } else if (!isPlaying && title) {
+      return (
+        <SpeechBubble
+          key={title}
+          messages={[
+            `Elvis is resting but "${title}" was the last song he listened to. Touch my iPod\'s screen to join us!`,
+          ]}
+          arrowPosition="left"
+        />
+      );
+    } else {
+      return (
+        <SpeechBubble
+          key="idle"
+          messages={[
+            'Waiting for Elvis to listen to music together. Hope he comes back soon!',
+          ]}
+          arrowPosition="left"
+        />
+      );
+    }
+  };
+
   return (
     <div className={`relative ${className ?? ''}`}>
       <div className="absolute top-1 xl:top-0 2xl:top-1 left-1/2 -translate-x-1/2 z-20 pointer-events-none w-full max-w-xs flex justify-center">
-        {playingData?.isPlaying ? (
-          <SpeechBubble
-            key={playingData.title}
-            messages={[
-              `Listening "${playingData.title}" with Elvis! Touch my iPod's screen to join us!`,
-            ]}
-            arrowPosition="left"
-          />
-        ) : (
-          <SpeechBubble
-            key="idle"
-            messages={[
-              'Waiting for Elvis to listen to music together. Hope he comes back soon!',
-            ]}
-            arrowPosition="left"
-          />
+        {handlerReturnSpeechBubble(
+          playingData?.isPlaying ?? false,
+          playingData?.title ?? null,
         )}
       </div>
       <ConchoMusic
@@ -231,7 +255,7 @@ export default function ConchoMusicAnimated({
             backgroundImage: `url('/images/album_pictures/x100pre.webp'})`,
           }}
         >
-          {playingData?.isPlaying ? (
+          {playingData?.isPlaying || playingData?.title ? (
             <a
               href={playingData.songUrl}
               target="_blank"
@@ -291,13 +315,13 @@ const IpodPlayingMusic = ({
       <div className="text-[10px] flex flex-col gap-1">
         <Image
           src={playingData.albumImageUrl}
-          width={18}
-          height={18}
+          width={32}
+          height={32}
           alt="spotify album cover"
         />
       </div>
       <div>
-        <div className="flex flex-col w-full min-w-0">
+        <div className="flex flex-col w-full min-w-0 items-center">
           <span className="text-[3px] xl:text-[4px] font-medium block truncate">
             {playingData.title}
           </span>
@@ -305,7 +329,7 @@ const IpodPlayingMusic = ({
             {playingData.artist}
           </span>
         </div>
-        <div className="flex gap-2 text-black text-sm">
+        <div className="flex gap-2 text-black text-sm justify-center">
           <span className="hidden xl:flex w-2 h-2 rounded-full text-white items-center justify-center ">
             <FaRandom size={6} />
           </span>

@@ -149,14 +149,28 @@ Uses OAuth 2.0 Authorization Code with Refresh Token flow:
 - `SPOTIFY_CLIENT_SECRET`
 - `SPOTIFY_REFRESH_TOKEN`
 
-### Generating Tokens
+### Generating a Refresh Token
 
-To generate a refresh token, use the [Spotify Authorization Code Flow](https://developer.spotify.com/documentation/web-api/tutorials/code-flow):
+Spotify refresh tokens expire after six months. Spotify does not provide a quick, friendly way to generate a replacement, so this repository includes `get-refresh-token.js` to make the process easier. The script starts a temporary local callback server, opens Spotify's authorization page, and exchanges the authorization code for a new refresh token.
 
-1. Create an app at [Spotify Developer Dashboard](https://developer.spotify.com/dashboard)
-2. Add `http://localhost:3000` to Redirect URIs
-3. Visit the authorization URL with scopes `user-read-currently-playing user-read-playback-state`
-4. Exchange the returned code for an access + refresh token
+#### Prerequisites
+
+1. Create or select an app in the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard).
+2. Add this exact Redirect URI to the app settings: `http://127.0.0.1:8888/callback`.
+3. Confirm that `package.json` contains `"type": "module"`; the script uses native ES module imports.
+4. Use Node.js 20 or newer.
+
+#### Run the generator
+
+From the repository root, run:
+
+```bash
+node get-refresh-token.js
+```
+
+The script prompts for the Spotify app's Client ID and Client Secret, then opens a browser window for authorization. After authorization, it prints the newly generated refresh token in the terminal. Copy that value into the `SPOTIFY_REFRESH_TOKEN` entry in your local environment file.
+
+The script requests the `user-read-private` and `user-read-currently-playing` scopes used by the Spotify integration. Keep the Client ID, Client Secret, and generated refresh token private;
 
 ---
 

@@ -196,4 +196,5 @@ Total Issues: X | HIGH: X | MEDIUM: X | LOW: X
 - **Never use npm or yarn** to install/manage dependencies.
 - If `node_modules` or `package-lock.json` exist from npm, remove them and reinstall with pnpm.
 - Use `pnpm install` for initial setup, `pnpm add <pkg>` for adding packages.
+
 <!-- END:package-manager-rules -->

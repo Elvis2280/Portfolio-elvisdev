@@ -74,6 +74,24 @@ export interface SpotifyTokenResponse {
   scope: string;
 }
 
+export interface SpotifyRefreshTokenSuccess {
+  access_token: string;
+  token_type: string;
+  expires_in: number;
+  scope: string;
+  refresh_token?: string;
+  ok: boolean;
+}
+
+export interface SpotifyRefreshTokenError {
+  error: string;
+  error_description: string;
+}
+
+export type SpotifyRefreshTokenResponse =
+  | SpotifyRefreshTokenSuccess
+  | SpotifyRefreshTokenError;
+
 export interface spotifyCurrentPlayingData {
   albumImageUrl: string;
   artist: string;
