@@ -24,7 +24,8 @@ export default function MoonRing({
 }: MoonRingProps) {
   const items = React.Children.toArray(children).slice(0, 5);
 
-  // Generate deterministic "random" positions with minimum spacing
+  // Calculate positions once per item count so rerenders do not make orbiting
+  // icons jump, while each item still receives a varied angle inside its segment.
   const positions = useMemo(() => {
     const count = items.length;
     if (count === 0) return [];

@@ -20,6 +20,8 @@ export default function HeroSection() {
   const astronautRef = useRef<HTMLDivElement>(null);
   const parpadosRef = useRef<SVGGElement>(null);
 
+  // These animations are created only after the referenced DOM nodes mount. Killing
+  // each instance on teardown prevents duplicate loops when the section remounts.
   useEffect(() => {
     const floatAnim = createAstronautAnimation(astronautRef.current);
     const blinkAnim = createBlinkAnimation(parpadosRef.current);

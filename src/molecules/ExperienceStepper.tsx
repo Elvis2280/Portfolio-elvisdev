@@ -24,6 +24,9 @@ export default function ExperienceStepper({
 
   const count = experiences.length;
 
+  // Responsive layout determines the step positions at runtime. This effect
+  // builds one paused timeline from those measurements, advances it with scroll,
+  // and observes each label independently for its entrance animation.
   useEffect(() => {
     const container = containerRef.current;
     const helmet = helmetRef.current;
@@ -101,6 +104,8 @@ export default function ExperienceStepper({
         endTrigger: lastStep ?? undefined,
         end: 'top 80%',
         onUpdate(self) {
+          // Scroll should reveal progress monotonically; scrolling back up must
+          // not move the helmet or completed connector fills backward.
           const target = Math.max(maxProgress, self.progress);
           maxProgress = target;
           tl.progress(target);
@@ -142,6 +147,8 @@ export default function ExperienceStepper({
     });
 
     return () => {
+      // GSAP and IntersectionObserver both retain external references, so release
+      // them together whenever the measured experience list changes or unmounts.
       ctx.revert();
       observers.forEach((o) => o.disconnect());
     };

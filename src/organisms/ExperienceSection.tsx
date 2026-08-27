@@ -14,6 +14,8 @@ export default function ExperienceSection() {
   const estrellaRef = useRef<HTMLDivElement>(null);
   const miraRef = useRef<SVGGElement>(null);
 
+  // The animation factory mutates the mounted decoration, so revert its GSAP
+  // context when this section unmounts instead of leaving inline styles behind.
   useEffect(() => {
     const ctx = createEstrellaAnimation(estrellaRef.current);
     return () => {
@@ -21,6 +23,8 @@ export default function ExperienceSection() {
     };
   }, []);
 
+  // The scope animation is independent from the star animation and therefore
+  // owns its own lifecycle and cleanup.
   useEffect(() => {
     const tl = createMiraAnimation(miraRef.current);
     return () => {

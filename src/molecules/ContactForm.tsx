@@ -31,6 +31,8 @@ const ContactForm = () => {
   const messageValue = useWatch({ control, name: 'message', defaultValue: '' });
   const remaining = 500 - (messageValue?.length ?? 0);
 
+  // Turnstile runs in execute mode, so the form must wait for a fresh token before
+  // calling the endpoint; the server will reject the request without that proof.
   const onSubmit = async (data: ContactFormData) => {
     const widgetCloudflare = turnstileRef.current;
 
@@ -66,11 +68,15 @@ const ContactForm = () => {
           : 'Failed to send message. Please try again later.';
       toast.error(message, { id: toastId });
     } finally {
+      // Turnstile tokens are single-use; reset the widget after either outcome so
+      // the next submission obtains a fresh token.
       setIsSubmitting(false);
       widgetCloudflare.reset();
     }
   };
 
+  // Invoke React Hook Form from the browser event so the Turnstile ref is read only
+  // during submission, not while React is rendering the form.
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     void handleSubmit(onSubmit)(event);

@@ -181,6 +181,8 @@ function FieldError({
 }: React.ComponentProps<'div'> & {
   errors?: Array<{ message?: string } | undefined>;
 }) {
+  // Multiple validators can report the same message; deduplicate it so one error
+  // is shown as plain text, while genuinely distinct errors remain a list.
   const content = useMemo(() => {
     if (children) {
       return children;

@@ -70,12 +70,16 @@ const SistemaUnifiedAnimated = forwardRef<
     const lightColorRef = useRef<SVGGElement>(null);
     const planetRef = useRef<SVGCircleElement>(null);
 
+    // The clickable project preview is HTML positioned over an SVG planet. Read
+    // the rendered bounding box once the SVG exists to align the two layers.
     useEffect(() => {
       if (planetRef.current) {
         setPlanetBBox(planetRef.current.getBBox());
       }
     }, []);
 
+    // Keep all persistent SVG timelines inside one GSAP context so reverting the
+    // context removes their transforms and listeners when this component unmounts.
     useEffect(() => {
       const ctx = gsap.context(() => {
         createSistemaOrbitAnimations(
@@ -103,6 +107,8 @@ const SistemaUnifiedAnimated = forwardRef<
       };
     }, []);
 
+    // The parent uses this stable callback for hover-triggered UFO motion without
+    // subscribing the animation to every render of the project data.
     const handlePlanetHover = useCallback(() => {
       createOvniHoverAnimation(
         weaponRef.current!,
@@ -113,6 +119,8 @@ const SistemaUnifiedAnimated = forwardRef<
 
     const rootRef = useRef<HTMLDivElement>(null);
 
+    // Expose only the animation entry point and root container needed by the
+    // projects pager; the SVG refs remain private to this component.
     useImperativeHandle(ref, () => ({
       playHoverAnimation: handlePlanetHover,
       getContainer: () => rootRef.current,
@@ -122,6 +130,8 @@ const SistemaUnifiedAnimated = forwardRef<
     const centerY = planetBBox ? planetBBox.y + planetBBox.height / 2 : 0;
     const radius = planetBBox ? planetBBox.width / 2 : 0;
 
+    // Place technology badges on a short arc around the planet by converting a
+    // centered angular offset into the SVG's percentage-based coordinate space.
     const getTechPosition = (index: number, total: number) => {
       const itemSpacing = 15;
       const totalArc = itemSpacing * (total - 1);

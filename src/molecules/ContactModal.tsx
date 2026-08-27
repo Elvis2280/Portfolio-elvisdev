@@ -54,11 +54,15 @@ export default function ContactModal({
   });
   const remaining = 500 - (messageValue?.length ?? 0);
 
+  // Dialog dismissal can come from Cancel, Escape, the close button, or the
+  // overlay; all paths need the same clean form and verification state.
   const resetTurnstile = () => {
     setTurnstileError(null);
     turnstileRef.current?.reset();
   };
 
+  // Execute Turnstile for this submission and use the returned token immediately;
+  // storing it in React state would introduce a race before the fetch starts.
   const onSubmit = async (data: ContactFormData) => {
     const widgetCloudflare = turnstileRef.current;
 
@@ -97,11 +101,15 @@ export default function ContactModal({
       setRequestError(message);
       toast.error(message, { id: toastId });
     } finally {
+      // Turnstile tokens are single-use; reset the widget after either outcome so
+      // reopening or retrying starts with a fresh verification.
       setIsSubmitting(false);
       widgetCloudflare.reset();
     }
   };
 
+  // Defer React Hook Form's handler invocation to the submit event because the
+  // callback reads the imperative Turnstile ref.
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     void handleSubmit(onSubmit)(event);

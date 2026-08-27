@@ -26,7 +26,8 @@ export default function SpeechBubble({
   const [isVisible, setIsVisible] = useState(delay === 0);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  // Initial delay
+  // Delay mounting the bubble's visible content without leaving a timer alive if
+  // the parent removes it before the delay expires.
   useEffect(() => {
     if (delay === 0) return;
     const delayTimer = setTimeout(() => setIsVisible(true), delay * 1000);
@@ -42,7 +43,8 @@ export default function SpeechBubble({
     }
   }, [displayText]);
 
-  // Typewriter loop
+  // This effect is a small state machine: each render schedules only the next
+  // typing, pause, deletion, or message-advance step and cleans up the prior one.
   useEffect(() => {
     if (!isVisible || messages.length === 0) return;
 

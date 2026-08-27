@@ -21,8 +21,12 @@ const MobileMenu = ({ onOpen }: MobileMenuProps) => {
   const estrellaRef = useRef<HTMLDivElement>(null);
   const miraRef = useRef<SVGGElement>(null);
 
+  // Keep the portal mounted during the exit animation; removing it immediately
+  // when isOpen becomes false would cut the closing animation short.
   const show = isOpen || exitAnimating;
 
+  // Delay unmounting long enough for the CSS exit animation to finish, while
+  // clearing an older timer so rapid toggles cannot race each other.
   const close = useCallback(() => {
     if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
     setExitAnimating(true);
@@ -41,6 +45,8 @@ const MobileMenu = ({ onOpen }: MobileMenuProps) => {
     }
   }, [isOpen, close]);
 
+  // Lock document scrolling only while the portal is open and always restore the
+  // previous document state when this component leaves the page.
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = 'hidden';
@@ -52,12 +58,16 @@ const MobileMenu = ({ onOpen }: MobileMenuProps) => {
     };
   }, [isOpen]);
 
+  // The delayed close timer is external to React's render lifecycle, so cancel it
+  // on unmount to avoid updating state after the menu has been removed.
   useEffect(() => {
     return () => {
       if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
     };
   }, []);
 
+  // These decorative GSAP timelines follow the portal's visible lifecycle and are
+  // recreated when it appears or begins its exit animation.
   useEffect(() => {
     const ctx = createEstrellaAnimation(estrellaRef.current);
     return () => {

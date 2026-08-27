@@ -61,11 +61,15 @@ export default function CvRequestModal() {
     setTurnstileError(null);
 
     try {
+      // Execute-mode widgets do not create a token on mount, so explicitly start
+      // verification and wait up to 30 seconds before contacting the API.
       widgetCloudflare.execute();
       const token = await widgetCloudflare.getResponsePromise(30_000);
       if (!token) {
         throw new Error('Security verification failed. Please try again');
       }
+      // Send the single-use token returned for this attempt; the server verifies
+      // it before reading or attaching the CV.
       const response = await fetch('/api/requestCv', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -83,11 +87,15 @@ export default function CvRequestModal() {
       setRequestError(message);
       toast.error(message);
     } finally {
+      // Turnstile tokens are single-use, so every success or failure must leave a
+      // reset widget ready for the next request.
       setIsSubmitting(false);
       widgetCloudflare.reset();
     }
   };
 
+  // React Hook Form is invoked from the browser submit event because this callback
+  // coordinates field validation with the imperative Turnstile widget ref.
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event?.preventDefault();
     void handleSubmit(onSubmit)(event);

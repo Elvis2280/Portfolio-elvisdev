@@ -33,6 +33,8 @@ export default function ProjectsSection({
   const isAnimatingRef = useRef(false);
   const isFirstRender = useRef(true);
 
+  // Page changes are staged around an exit animation. The ref lock prevents a
+  // second click from starting another transition before the new project enters.
   const handlePageChange = (newPage: number) => {
     if (newPage >= 1 && newPage <= totalPages && !isAnimatingRef.current) {
       isAnimatingRef.current = true;
@@ -52,6 +54,8 @@ export default function ProjectsSection({
     }
   };
 
+  // useLayoutEffect runs after the new project is committed but before paint, so
+  // the enter animation can measure and reveal the replacement without flicker.
   useLayoutEffect(() => {
     if (isFirstRender.current) {
       isFirstRender.current = false;

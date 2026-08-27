@@ -63,12 +63,16 @@ export default function ConchoMusicAnimated({
     null,
   );
 
+  // The iPod screen is HTML layered over an SVG. Measure the SVG screen after
+  // mount so the overlay can use the artwork's actual responsive coordinates.
   useEffect(() => {
     if (pantallaRef.current) {
       setPantallaBBox(pantallaRef.current.getBBox());
     }
   }, []);
 
+  // Playing state owns the blinking eyes and music-note animation. When playback
+  // stops, reset those SVG elements explicitly so the idle illustration is clean.
   useEffect(() => {
     if (!playingData?.title) {
       const paths = parpadosRef.current?.querySelectorAll('path');
@@ -114,6 +118,9 @@ export default function ConchoMusicAnimated({
     };
   }, [playingData?.isPlaying]);
 
+  // Orbit animations update album art through callbacks. Clear the previous art
+  // before scheduling new loops, then cancel every loop and pending visual state
+  // during cleanup when the track changes or the component unmounts.
   useEffect(() => {
     if (!playingData?.title) {
       leftOrbitRef.current?.kill();
@@ -128,6 +135,8 @@ export default function ConchoMusicAnimated({
 
     const pick = () => albumUrls[Math.floor(Math.random() * albumUrls.length)];
 
+    // Clear the old album elements after the current effect completes so React
+    // can render the next track's empty orbit before new animation callbacks run.
     queueMicrotask(() => {
       setActiveLeftAlbumUrl(null);
       setActiveRightAlbumUrl(null);
@@ -135,6 +144,8 @@ export default function ConchoMusicAnimated({
 
     headSwayRef.current = createHeadSway(headRef.current);
 
+    // Wait one frame for the SVG refs and cleared orbit content to be committed
+    // before querying them to construct the new orbit animations.
     requestAnimationFrame(() => {
       leftOrbitRef.current = createAlbumOrbit(
         leftAlbumContainerRef.current,
@@ -166,6 +177,8 @@ export default function ConchoMusicAnimated({
     };
   }, [playingData?.isPlaying]);
 
+  // A new key restarts the typewriter bubble whenever the song or playback state
+  // changes, while the idle key preserves one stable bubble for the idle state.
   const handlerReturnSpeechBubble = (
     isPlaying: boolean,
     title: string | null,
