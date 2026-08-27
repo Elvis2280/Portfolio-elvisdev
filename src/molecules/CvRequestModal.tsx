@@ -27,7 +27,6 @@ export default function CvRequestModal() {
   const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [requestError, setRequestError] = useState<string | null>(null);
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance | null>(null);
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
@@ -46,7 +45,6 @@ export default function CvRequestModal() {
     setIsOpen(open);
     if (!open) {
       setRequestError(null);
-      setTurnstileToken(null);
       setTurnstileError(null);
       reset();
       turnstileRef.current?.reset();
@@ -86,7 +84,6 @@ export default function CvRequestModal() {
       toast.error(message);
     } finally {
       setIsSubmitting(false);
-      setTurnstileToken(null);
       widgetCloudflare.reset();
     }
   };
@@ -136,30 +133,25 @@ export default function CvRequestModal() {
                 size: 'flexible',
                 execution: 'execute',
               }}
-              onSuccess={(token) => {
-                setTurnstileToken(token);
+              onSuccess={() => {
                 setTurnstileError(null);
               }}
               onExpire={() => {
-                setTurnstileToken(null);
                 setTurnstileError(
                   'Security verification expired. Please verify again.',
                 );
               }}
               onTimeout={() => {
-                setTurnstileToken(null);
                 setTurnstileError(
                   'Security verification timed out. Please try again.',
                 );
               }}
               onUnsupported={() => {
-                setTurnstileToken(null);
                 setTurnstileError(
                   'Security verification is not supported in this browser.',
                 );
               }}
               onError={() => {
-                setTurnstileToken(null);
                 setTurnstileError(
                   'Security verification failed. Please try again.',
                 );
@@ -199,6 +191,8 @@ export default function CvRequestModal() {
               </Button>
             </DialogClose>
             <Button
+              variant={'outline'}
+              className="px-8"
               type="submit"
               disabled={!isValid || !turnstileSiteKey || isSubmitting}
             >
