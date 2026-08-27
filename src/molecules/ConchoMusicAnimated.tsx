@@ -17,8 +17,6 @@ import {
   TbPlayerPauseFilled,
 } from 'react-icons/tb';
 import { spotifyCurrentPlayingData } from '@/types/spotify';
-import { FaRandom } from 'react-icons/fa';
-import { FaRepeat } from 'react-icons/fa6';
 
 import Image from 'next/image';
 import SpeechBubble from '@/molecules/SpeechBubble';
@@ -320,11 +318,11 @@ const IpodPlayingMusic = ({
 }) => {
   return (
     <div className="text-white p-1 flex flex-col items-center justify-between h-full">
-      <div className=" flex justify-between items-center w-full">
+      {/*<div className=" flex justify-between items-center w-full">
         <span> </span>
         <p className="text-[3px] xl:text-[6px]">IPOD</p>
         <IoBatteryFull className="text-[6px] xl:text-[8px]" />
-      </div>
+      </div>*/}
       <div className="text-[10px] flex flex-col gap-1">
         <Image
           src={playingData.albumImageUrl}
@@ -343,20 +341,14 @@ const IpodPlayingMusic = ({
           </span>
         </div>
         <div className="flex gap-2 text-black text-sm justify-center">
-          <span className="hidden xl:flex w-2 h-2 rounded-full text-white items-center justify-center ">
-            <FaRandom size={6} />
-          </span>
           <span className="w-2 h-2 rounded-full text-white flex items-center justify-center ">
-            <TbPlayerSkipBackFilled size={6} />
+            <TbPlayerSkipBackFilled size={5} />
           </span>
           <span className="w-2 h-2 rounded-full bg-white flex items-center justify-center ">
-            <TbPlayerPauseFilled size={6} />
+            <TbPlayerPauseFilled size={5} />
           </span>
           <span className="w-2 h-2 rounded-full text-white  flex items-center justify-center">
-            <TbPlayerSkipForwardFilled size={6} />
-          </span>
-          <span className="hidden xl:flex w-2 h-2 rounded-full text-white items-center justify-center ">
-            <FaRepeat size={6} />
+            <TbPlayerSkipForwardFilled size={5} />
           </span>
         </div>
       </div>
