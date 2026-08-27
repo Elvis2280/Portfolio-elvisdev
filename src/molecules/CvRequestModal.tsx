@@ -96,7 +96,9 @@ export default function CvRequestModal() {
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button type="button">Download CV</Button>
+        <Button variant={'outline'} className="px-8" type="button">
+          Download CV
+        </Button>
       </DialogTrigger>
 
       <DialogContent className="p-0 sm:max-w-md">
@@ -191,8 +193,6 @@ export default function CvRequestModal() {
               </Button>
             </DialogClose>
             <Button
-              variant={'outline'}
-              className="px-8"
               type="submit"
               disabled={!isValid || !turnstileSiteKey || isSubmitting}
             >
