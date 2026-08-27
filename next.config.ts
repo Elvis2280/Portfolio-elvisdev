@@ -17,6 +17,9 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  outputFileTracingIncludes: {
+    '/api/requestCv': ['./src/data/cv/Elvis-Curriculum.pdf'],
+  },
 };
 
 export default nextConfig;

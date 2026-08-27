@@ -1,8 +1,11 @@
 'use client';
-import { useRef, useState, type FormEvent } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
+
+import { FormEvent, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Turnstile, type TurnstileInstance } from '@marsidev/react-turnstile';
+import { toast } from 'sonner';
+
 import { Button } from '@/atoms/ui/button';
 import {
   Dialog,
@@ -12,26 +15,19 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '@/atoms/ui/dialog';
-import { Field, FieldLabel, FieldError } from '@/atoms/ui/field';
+import { Field, FieldError, FieldLabel } from '@/atoms/ui/field';
 import { Input } from '@/atoms/ui/input';
-import { Textarea } from '@/atoms/ui/textarea';
 import { Spinner } from '@/atoms/ui/spinner';
-import { contactSchema, type ContactFormData } from '@/lib/validations';
-import { toast } from 'sonner';
+import { cvRequestSchema, type CvRequestFormData } from '@/lib/validations';
 import { parseApiResponse } from '@/lib/api/request';
 
-interface ContactModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-export default function ContactModal({
-  isOpen = false,
-  onClose,
-}: ContactModalProps) {
+export default function CvRequestModal() {
+  const [isOpen, setIsOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [requestError, setRequestError] = useState<string | null>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [turnstileError, setTurnstileError] = useState<string | null>(null);
   const turnstileRef = useRef<TurnstileInstance | null>(null);
   const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
@@ -39,102 +35,88 @@ export default function ContactModal({
   const {
     register,
     handleSubmit,
-    control,
     reset,
     formState: { errors, isValid },
-  } = useForm<ContactFormData>({
-    resolver: yupResolver(contactSchema),
+  } = useForm<CvRequestFormData>({
+    resolver: yupResolver(cvRequestSchema),
     mode: 'onChange',
   });
 
-  const messageValue = useWatch({
-    control,
-    name: 'message',
-    defaultValue: '',
-  });
-  const remaining = 500 - (messageValue?.length ?? 0);
-
-  const resetTurnstile = () => {
-    setTurnstileError(null);
-    turnstileRef.current?.reset();
+  const handleOpenChange = (open: boolean) => {
+    setIsOpen(open);
+    if (!open) {
+      setRequestError(null);
+      setTurnstileToken(null);
+      setTurnstileError(null);
+      reset();
+      turnstileRef.current?.reset();
+    }
   };
 
-  const onSubmit = async (data: ContactFormData) => {
+  const onSubmit = async (data: CvRequestFormData) => {
     const widgetCloudflare = turnstileRef.current;
-
     if (!widgetCloudflare) {
-      setRequestError('Security verification is unavailable.');
+      setTurnstileError('Security verification is unavailable');
       return;
     }
-
-    setRequestError(null);
-    setTurnstileError(null);
     setIsSubmitting(true);
-    const toastId = toast.loading('Sending message!');
+    setTurnstileError(null);
 
     try {
       widgetCloudflare.execute();
       const token = await widgetCloudflare.getResponsePromise(30_000);
-
       if (!token) {
-        throw new Error('Security verification failed. Please try again.');
+        throw new Error('Security verification failed. Please try again');
       }
-
-      const response = await fetch('/api/sendEmail', {
+      const response = await fetch('/api/requestCv', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...data, turnstileToken: token }),
       });
       await parseApiResponse(response);
       reset();
-      onClose();
-      toast.success('Message sent successfully!', { id: toastId });
+      setIsOpen(false);
+      toast.success('Your CV request was submitted successfully!');
     } catch (error) {
       const message =
         error instanceof Error
           ? error.message
-          : 'Failed to send message. Please try again later.';
+          : 'Unable to request the CV. Please try again later.';
       setRequestError(message);
-      toast.error(message, { id: toastId });
+      toast.error(message);
     } finally {
       setIsSubmitting(false);
+      setTurnstileToken(null);
       widgetCloudflare.reset();
     }
   };
 
   const handleFormSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+    event?.preventDefault();
     void handleSubmit(onSubmit)(event);
   };
 
   return (
-    <Dialog
-      open={isOpen}
-      onOpenChange={(open) => {
-        if (!open) {
-          setRequestError(null);
-          reset();
-          resetTurnstile();
-          onClose();
-        }
-      }}
-    >
-      <DialogContent className="xl:min-w-xl">
-        <form onSubmit={handleFormSubmit} className="flex flex-col gap-4">
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+      <DialogTrigger asChild>
+        <Button type="button">Download CV</Button>
+      </DialogTrigger>
+
+      <DialogContent className="p-0 sm:max-w-md">
+        <form onSubmit={handleFormSubmit} className="flex flex-col gap-4 p-4">
           <DialogHeader>
-            <DialogTitle className="font-bold text-2xl ">
-              Send me a message!
+            <DialogTitle className="font-bold text-2xl">
+              Thanks for your interest in my resume
             </DialogTitle>
             <DialogDescription>
-              if you&apos;re interested in working together, or bringing an idea
-              to life, I&apos;d love to hear from you. Let&apos;s build
-              something great.
+              Enter your email address and check your inbox. A copy of my CV
+              will be sent to you.
             </DialogDescription>
           </DialogHeader>
 
           {requestError && (
             <div
-              id="contact-request-error"
+              id="cv-request-error"
               role="alert"
               aria-live="polite"
               className="text-sm font-normal text-destructive"
@@ -143,65 +125,41 @@ export default function ContactModal({
             </div>
           )}
 
-          <Field>
-            <FieldLabel>Email</FieldLabel>
-            <Input
-              type="email"
-              placeholder="your@email.com"
-              disabled={isSubmitting}
-              aria-invalid={!!errors.email}
-              {...register('email')}
-            />
-            <FieldError errors={[errors.email]} />
-          </Field>
-
-          <Field>
-            <FieldLabel>Message</FieldLabel>
-            <div className="relative">
-              <Textarea
-                placeholder="Tell me about your project..."
-                disabled={isSubmitting}
-                className="h-[200px] resize-none pr-16"
-                aria-invalid={!!errors.message}
-                {...register('message')}
-              />
-              <span className="absolute bottom-2 right-3 text-sm text-muted-foreground">
-                {remaining}
-              </span>
-            </div>
-            <FieldError errors={[errors.message]} />
-          </Field>
-
           {turnstileSiteKey ? (
             <Turnstile
               ref={turnstileRef}
               siteKey={turnstileSiteKey}
               options={{
-                action: 'contact_form',
+                action: 'request_cv',
                 appearance: 'execute',
                 theme: 'auto',
                 size: 'flexible',
                 execution: 'execute',
               }}
-              onSuccess={() => {
+              onSuccess={(token) => {
+                setTurnstileToken(token);
                 setTurnstileError(null);
               }}
               onExpire={() => {
+                setTurnstileToken(null);
                 setTurnstileError(
                   'Security verification expired. Please verify again.',
                 );
               }}
               onTimeout={() => {
+                setTurnstileToken(null);
                 setTurnstileError(
                   'Security verification timed out. Please try again.',
                 );
               }}
               onUnsupported={() => {
+                setTurnstileToken(null);
                 setTurnstileError(
                   'Security verification is not supported in this browser.',
                 );
               }}
               onError={() => {
+                setTurnstileToken(null);
                 setTurnstileError(
                   'Security verification failed. Please try again.',
                 );
@@ -219,18 +177,33 @@ export default function ContactModal({
             </p>
           )}
 
+          <Field>
+            <FieldLabel htmlFor="cv-email">Email</FieldLabel>
+            <Input
+              id="cv-email"
+              type="email"
+              placeholder="your@email.com"
+              autoComplete="email"
+              disabled={isSubmitting}
+              aria-invalid={!!errors.email}
+              aria-describedby={errors.email ? 'cv-email-error' : undefined}
+              {...register('email')}
+            />
+            <FieldError id="cv-email-error" errors={[errors.email]} />
+          </Field>
+
           <DialogFooter>
             <DialogClose asChild>
-              <Button variant={'outline'} disabled={isSubmitting}>
+              <Button type="button" variant="outline" disabled={isSubmitting}>
                 Cancel
               </Button>
             </DialogClose>
             <Button
               type="submit"
-              disabled={!isValid || isSubmitting || !turnstileSiteKey}
+              disabled={!isValid || !turnstileSiteKey || isSubmitting}
             >
               {isSubmitting && <Spinner data-icon="inline-end" />}
-              {isSubmitting ? 'Sending...' : 'Send message'}
+              {isSubmitting ? 'Sending...' : 'Send me the CV'}
             </Button>
           </DialogFooter>
         </form>

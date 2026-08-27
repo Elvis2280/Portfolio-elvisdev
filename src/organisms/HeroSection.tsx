@@ -7,6 +7,7 @@ import { FaGolang } from 'react-icons/fa6';
 import { RiNextjsFill } from 'react-icons/ri';
 import MoonRing from '@/molecules/MoonRing';
 import SpeechBubble from '@/molecules/SpeechBubble';
+import CvRequestModal from '@/molecules/CvRequestModal';
 import ConchoAstronaut from '@/atoms/ConchoAstronaut';
 import {
   createAstronautAnimation,
@@ -86,6 +87,10 @@ export default function HeroSection() {
           </span>{' '}
           frontends.
         </p>
+
+        <div className="mt-6 flex justify-center max-w-xl lg:max-w-md 2xl:max-w-xl">
+          <CvRequestModal />
+        </div>
       </div>
 
       {/* Moon + Rings wrapper */}

@@ -16,3 +16,34 @@ export const contactSchema = yup.object({
 });
 
 export type ContactFormData = yup.InferType<typeof contactSchema>;
+
+const turnstileTokenSchema = yup
+  .string()
+  .strict()
+  .typeError('Security verification is invalid')
+  .required('Security verification is required')
+  .max(2048, 'Security verification is invalid');
+
+export const contactApiSchema = contactSchema.shape({
+  turnstileToken: turnstileTokenSchema,
+});
+
+export type ContactApiFormData = yup.InferType<typeof contactApiSchema>;
+
+export const cvRequestSchema = yup.object({
+  email: yup
+    .string()
+    .required('Email is required')
+    .email('Please enter a valid email address')
+    .trim('Email cannot include leading or trailing spaces')
+    .lowercase('Email must be lowercase')
+    .max(254, 'Email must be at most 254 characters'),
+});
+
+export type CvRequestFormData = yup.InferType<typeof cvRequestSchema>;
+
+export const cvRequestApiSchema = cvRequestSchema.shape({
+  turnstileToken: turnstileTokenSchema,
+});
+
+export type CvRequestApiFormData = yup.InferType<typeof cvRequestApiSchema>;
